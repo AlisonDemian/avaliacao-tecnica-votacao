@@ -18,9 +18,4 @@ public class PautaEntity {
     private Long id;
     private String tema;
 
-    @Column(name = "votos_sim")
-    private Integer votosSim;
-
-    @Column(name = "votos_nao")
-    private Integer votosNao;
 }
