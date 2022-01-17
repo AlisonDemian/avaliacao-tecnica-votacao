@@ -2,9 +2,7 @@ package com.sicredi.avaliacaotecnicavotacao.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +14,7 @@ import javax.persistence.Table;
 public class AssociadoEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String cpf;

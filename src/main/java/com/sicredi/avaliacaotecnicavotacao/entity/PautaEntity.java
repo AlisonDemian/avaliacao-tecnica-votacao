@@ -18,4 +18,7 @@ public class PautaEntity {
     private Long id;
     private String tema;
 
+    @OneToOne(mappedBy = "pauta")
+    private SessaoEntity sessao;
+
 }

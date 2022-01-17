@@ -7,8 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class PautaResponseDto {
+public class AssociadoResponseDto {
 
     private Long id;
-    private String tema;
+    private String cpf;
 }

@@ -1,7 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
-import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
-import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
+import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
+import com.sicredi.avaliacaotecnicavotacao.repository.AssociadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,27 +9,26 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class PautaService {
+public class AssociadoService {
 
-    private final PautaRepository repository;
+    private final AssociadoRepository repository;
 
-    public PautaEntity criar(PautaEntity entity) {
+    public AssociadoEntity criar(AssociadoEntity entity) {
         return repository.save(entity);
     }
 
-    public List<PautaEntity> listar() {
+    public List<AssociadoEntity> listar() {
         return repository.findAll();
     }
 
-    public PautaEntity buscarPorId(Long id) {
+    public AssociadoEntity buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("id inexistente.")); //temporaria ate criar as exceçoes
+                .orElseThrow(() -> new RuntimeException("Associado não encontrado."));
     }
 
-    public PautaEntity atualizar(Long id, PautaEntity entityAtualizada) {
+    public AssociadoEntity atualizar(Long id, AssociadoEntity entityAtualizada) {
         buscarPorId(id);
         entityAtualizada.setId(id);
-
         return repository.save(entityAtualizada);
     }
 
