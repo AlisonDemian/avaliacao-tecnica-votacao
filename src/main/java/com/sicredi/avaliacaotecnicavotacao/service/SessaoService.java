@@ -1,36 +1,35 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
-import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
+import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
-import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
-import lombok.RequiredArgsConstructor;
+import com.sicredi.avaliacaotecnicavotacao.repository.SessaoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
-public class PautaService {
+public class SessaoService {
 
-    private final PautaRepository repository;
+    private final SessaoRepository repository;
 
-    public PautaEntity criar(PautaEntity entity) {
+    public SessaoEntity criar(SessaoEntity entity) {
         return repository.save(entity);
     }
 
-    public List<PautaEntity> listar() {
+    public List<SessaoEntity> listar() {
         return repository.findAll();
     }
 
-    public PautaEntity buscarPorId(Long id) {
+    public SessaoEntity buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Pauta não encontrada")); //
+                .orElseThrow(() -> new ElementNotFoundException("Sessao não encontrada"));
     }
 
-    public PautaEntity atualizar(Long id, PautaEntity entityAtualizada) {
+    public SessaoEntity atualizar(Long id, SessaoEntity entityAtualizada) {
         buscarPorId(id);
         entityAtualizada.setId(id);
-
         return repository.save(entityAtualizada);
     }
 

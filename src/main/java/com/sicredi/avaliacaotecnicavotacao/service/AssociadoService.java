@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.AssociadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class AssociadoService {
 
     public AssociadoEntity buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Associado não encontrado."));
+                .orElseThrow(() -> new ElementNotFoundException("Associado não encontrado"));
     }
 
     public AssociadoEntity atualizar(Long id, AssociadoEntity entityAtualizada) {

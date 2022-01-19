@@ -20,4 +20,8 @@ public class SessaoEntity {
 
     @Column(name = "tempo_votacao")
     private LocalTime tempoVotacao;
+
+    @OneToOne
+    @JoinColumn(name = "id_pauta", referencedColumnName = "id")
+    private PautaEntity pauta;
 }

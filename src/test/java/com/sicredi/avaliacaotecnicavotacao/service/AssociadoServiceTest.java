@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.AssociadoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,8 +65,8 @@ class AssociadoServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.buscarPorId(anyLong()))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Associado não encontrado.");
+                .isInstanceOf(ElementNotFoundException.class)
+                .hasMessage("Associado não encontrado");
     }
 
     @Test

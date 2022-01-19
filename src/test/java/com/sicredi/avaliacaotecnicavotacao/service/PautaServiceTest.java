@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,8 +68,8 @@ class PautaServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.buscarPorId(id))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("id inexistente.");
+                .isInstanceOf(ElementNotFoundException.class)
+                .hasMessage("Pauta não encontrada");
     }
 
     @Test

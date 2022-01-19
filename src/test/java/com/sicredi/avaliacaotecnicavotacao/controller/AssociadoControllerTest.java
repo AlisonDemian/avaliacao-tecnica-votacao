@@ -1,6 +1,6 @@
 package com.sicredi.avaliacaotecnicavotacao.controller;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sicredi.avaliacaotecnicavotacao.converter.AssociadoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.AssociadoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AssociadoController.class)
 class AssociadoControllerTest {
 
-    private final Gson gson = new Gson();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +45,7 @@ class AssociadoControllerTest {
                 .thenReturn(geraResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = post("/associados/criar")
-                .content(gson.toJson(geraRequestDto()))
+                .content(mapper.writeValueAsString(geraRequestDto()))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
@@ -93,7 +93,7 @@ class AssociadoControllerTest {
                 .thenReturn(geraResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = put("/associados/atualizar/{id}", anyLong())
-                .content(gson.toJson(geraRequestDto()))
+                .content(mapper.writeValueAsString(geraRequestDto()))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)

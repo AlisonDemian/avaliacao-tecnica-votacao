@@ -1,6 +1,6 @@
 package com.sicredi.avaliacaotecnicavotacao.controller;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sicredi.avaliacaotecnicavotacao.converter.PautaConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PautaController.class)
 class PautaControllerTest {
 
-    private final Gson gson = new Gson();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,7 +46,7 @@ class PautaControllerTest {
 
         MockHttpServletRequestBuilder requestBuilder = post("/pautas/criar", any(PautaRequestDto.class))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(geraPautaRequest()));
+                .content(mapper.writeValueAsString(geraPautaRequest()));
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isCreated());
@@ -92,7 +92,7 @@ class PautaControllerTest {
         MockHttpServletRequestBuilder requestBuilder = put("/pautas/atualizar/{id}",
                 anyLong())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(geraPautaRequest()));
+                .content(mapper.writeValueAsString(geraPautaRequest()));
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());
