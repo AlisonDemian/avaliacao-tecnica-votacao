@@ -2,7 +2,7 @@ package com.sicredi.avaliacaotecnicavotacao.dto;
 
 import lombok.*;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +12,8 @@ import java.time.LocalTime;
 public class SessaoResponseDto {
 
     private Long id;
-    private LocalTime tempoVotacao;
+    private LocalDateTime tempoVotacao;
     private PautaResponseDto pauta;
+    private boolean statusAberto;
 
 }

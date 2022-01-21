@@ -5,15 +5,17 @@ import com.sicredi.avaliacaotecnicavotacao.dto.VotoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.VotoSessaoEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class VotoConverter {
 
-    private AssociadoConverter associadoConverter;
-    private SessaoConverter sessaoConverter;
+    private final AssociadoConverter associadoConverter;
+    private final SessaoConverter sessaoConverter;
 
-    public VotoSessaoEntity requestDtoTOEntity(VotoRequestDto request) {
+    public VotoSessaoEntity requestDtoToEntity(VotoRequestDto request) {
         return VotoSessaoEntity.builder()
                 .associado(getAssociado(request))
                 .sessao(getSessao(request))
@@ -22,11 +24,20 @@ public class VotoConverter {
     }
 
     public VotoResponseDto entityToResponseDto(VotoSessaoEntity entity) {
-        return VotoResponseDto.builder()
-                .id(entity.getId())
-                .associado(associadoConverter.entityToResponseDto(entity.getAssociado()))
-                .sessao(sessaoConverter.entityToResponseDto(entity.getSessao()))
-                .build();
+        if (entity.getVoto() == 1) {
+            return VotoResponseDto.builder()
+                    .associado(associadoConverter.entityToResponseDto(entity.getAssociado()))
+                    .sessao(sessaoConverter.entityToResponseDto(entity.getSessao()))
+                    .voto("sim")
+                    .build();
+        } else {
+            return VotoResponseDto.builder()
+                    .associado(associadoConverter.entityToResponseDto(entity.getAssociado()))
+                    .sessao(sessaoConverter.entityToResponseDto(entity.getSessao()))
+                    .voto("não")
+                    .build();
+        }
+
     }
 
     private SessaoEntity getSessao(VotoRequestDto request) {

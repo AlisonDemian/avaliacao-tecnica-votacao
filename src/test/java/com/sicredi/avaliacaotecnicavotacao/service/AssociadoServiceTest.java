@@ -11,8 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.geraEntity;
-import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.geraEntityList;
+import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.geraAssociadoEntity;
+import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.geraAssociadoEntityList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,7 +31,7 @@ class AssociadoServiceTest {
 
     @Test
     void quandoCriarAssociado_retornaSucesso() {
-        AssociadoEntity entity = geraEntity();
+        AssociadoEntity entity = geraAssociadoEntity();
 
         when(repository.save(any(AssociadoEntity.class)))
                 .thenReturn(entity);
@@ -42,7 +42,7 @@ class AssociadoServiceTest {
     @Test
     void quandoListarAssociado_retornaSucesso() {
         when(repository.findAll())
-                .thenReturn(geraEntityList());
+                .thenReturn(geraAssociadoEntityList());
 
         assertThat(service.listar())
                 .isNotNull()
@@ -52,7 +52,7 @@ class AssociadoServiceTest {
     @Test
     void quandoBuscarPorId_retornaSucesso() {
         when(repository.findById(anyLong()))
-                .thenReturn(Optional.of(geraEntity()));
+                .thenReturn(Optional.of(geraAssociadoEntity()));
 
         assertThat(service.buscarPorId(anyLong()))
                 .isNotNull()
@@ -71,11 +71,11 @@ class AssociadoServiceTest {
 
     @Test
     void quandoAtualizar_retornaSucesso() {
-        AssociadoEntity entityAtualizada = geraEntity();
+        AssociadoEntity entityAtualizada = geraAssociadoEntity();
         entityAtualizada.setCpf("22222222222");
 
         when(repository.findById(anyLong()))
-                .thenReturn(Optional.of(geraEntity()));
+                .thenReturn(Optional.of(geraAssociadoEntity()));
         when(repository.save(any(AssociadoEntity.class)))
                 .thenReturn(entityAtualizada);
 
@@ -87,7 +87,7 @@ class AssociadoServiceTest {
     @Test
     void quandoDeletar_retornaSucesso() {
         when(repository.findById(anyLong()))
-                .thenReturn(Optional.of(geraEntity()));
+                .thenReturn(Optional.of(geraAssociadoEntity()));
 
         service.deletar(anyLong());
 

@@ -28,13 +28,13 @@ class SessaoConverterTest {
     void quandoConverter_requestToEntity_retornaSucesso() {
         assertAll(
                 () -> assertEquals(PautaEntity.class,
-                        converter.requestToEntity(geraSessaoRequest()).getPauta().getClass()),
+                        converter.requestToEntity(geraSessaoRequestDto()).getPauta().getClass()),
 
                 () -> assertEquals(geraSessaoEntity().getTempoVotacao(),
-                        converter.requestToEntity(geraSessaoRequest()).getTempoVotacao()),
+                        converter.requestToEntity(geraSessaoRequestDto()).getTempoVotacao()),
 
                 () -> assertEquals(geraSessaoEntity().getPauta().getId(),
-                        converter.requestToEntity(geraSessaoRequest()).getPauta().getId())
+                        converter.requestToEntity(geraSessaoRequestDto()).getPauta().getId())
         );
     }
 
@@ -45,13 +45,13 @@ class SessaoConverterTest {
 
         SessaoEntity entity = geraSessaoEntity();
         assertAll(
-                () -> assertEquals(geraSessaoResponse().getId(),
+                () -> assertEquals(geraSessaoResponseDto().getId(),
                         converter.entityToResponseDto(entity).getId()),
 
-                () -> assertEquals(geraSessaoResponse().getTempoVotacao(),
+                () -> assertEquals(geraSessaoResponseDto().getTempoVotacao(),
                         converter.entityToResponseDto(entity).getTempoVotacao()),
 
-                () -> assertEquals(geraSessaoResponse().getPauta().getId(),
+                () -> assertEquals(geraSessaoResponseDto().getPauta().getId(),
                         converter.entityToResponseDto(entity).getPauta().getId())
         );
     }

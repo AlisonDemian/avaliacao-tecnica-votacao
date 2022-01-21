@@ -10,32 +10,32 @@ import static java.util.Collections.singletonList;
 
 public abstract class AssociadoUtils {
 
-    public static AssociadoEntity geraEntity() {
+    public static AssociadoEntity geraAssociadoEntity() {
         return AssociadoEntity.builder()
                 .id(1L)
                 .cpf("11111111111")
                 .build();
     }
 
-    public static AssociadoResponseDto geraResponseDto() {
+    public static AssociadoResponseDto geraAssociadoResponseDto() {
         return AssociadoResponseDto.builder()
                 .id(1L)
                 .cpf("11111111111")
                 .build();
     }
 
-    public static AssociadoRequestDto geraRequestDto() {
+    public static AssociadoRequestDto geraAssociadoRequestDto() {
         return AssociadoRequestDto.builder()
                 .cpf("11111111111")
                 .build();
     }
 
-    public static List<AssociadoEntity> geraEntityList() {
-        return singletonList(geraEntity());
+    public static List<AssociadoEntity> geraAssociadoEntityList() {
+        return singletonList(geraAssociadoEntity());
     }
 
-    public static List<AssociadoResponseDto> geraResponseDtoList() {
-        return singletonList(geraResponseDto());
+    public static List<AssociadoResponseDto> geraAssociadoResponseDtoList() {
+        return singletonList(geraAssociadoResponseDto());
     }
 
 }

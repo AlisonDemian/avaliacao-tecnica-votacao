@@ -13,17 +13,17 @@ import javax.persistence.*;
 @Entity
 public class VotoSessaoEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @EmbeddedId
+    private VotoSessaoEntityKey id;
     private Integer voto;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("idSessao")
     @JoinColumn(name = "id_sessao")
     private SessaoEntity sessao;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("idAssociado")
     @JoinColumn(name = "id_associado")
     private AssociadoEntity associado;
 }

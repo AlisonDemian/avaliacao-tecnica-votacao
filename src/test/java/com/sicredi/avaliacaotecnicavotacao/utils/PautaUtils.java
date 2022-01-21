@@ -14,6 +14,8 @@ public abstract class PautaUtils {
         return PautaEntity.builder()
                 .id(1L)
                 .tema("Teste")
+                .votosSim(1)
+                .votosNao(1)
                 .build();
     }
 

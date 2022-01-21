@@ -3,7 +3,7 @@ package com.sicredi.avaliacaotecnicavotacao.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +19,10 @@ public class SessaoEntity {
     private Long id;
 
     @Column(name = "tempo_votacao")
-    private LocalTime tempoVotacao;
+    private LocalDateTime tempoVotacao;
+
+    @Column(name = "status_aberto")
+    private boolean statusAberto;
 
     @OneToOne
     @JoinColumn(name = "id_pauta", referencedColumnName = "id")

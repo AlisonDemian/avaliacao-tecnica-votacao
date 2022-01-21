@@ -27,6 +27,10 @@ public class SessaoService {
                 .orElseThrow(() -> new ElementNotFoundException("Sessao não encontrada"));
     }
 
+    public List<SessaoEntity> listarSessaoStatusAberto() {
+        return repository.findByStatusAberto(true);
+    }
+
     public SessaoEntity atualizar(Long id, SessaoEntity entityAtualizada) {
         buscarPorId(id);
         entityAtualizada.setId(id);

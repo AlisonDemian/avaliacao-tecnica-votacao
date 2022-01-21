@@ -21,4 +21,12 @@ public class PautaEntity {
     @OneToOne(mappedBy = "pauta")
     private SessaoEntity sessao;
 
+    @Column(name = "status_votacao")
+    private String statusVotacao;
+
+    @Column(name = "votos_sim")
+    private Integer votosSim = 0;
+
+    @Column(name = "votos_nao")
+    private Integer votosNao = 0;
 }

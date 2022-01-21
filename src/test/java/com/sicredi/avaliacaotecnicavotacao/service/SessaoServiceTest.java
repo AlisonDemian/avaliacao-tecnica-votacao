@@ -9,7 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Optional;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.geraListaSessaoEntity;
@@ -70,7 +71,7 @@ class SessaoServiceTest {
     @Test
     void quandoAtualizar_retornaSucesso() {
         SessaoEntity entityAtualiza = geraSessaoEntity();
-        entityAtualiza.setTempoVotacao(LocalTime.of(0, 0, 5));
+        entityAtualiza.setTempoVotacao(LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0));
         Long id = anyLong();
 
         when(repository.findById(id))
@@ -80,7 +81,8 @@ class SessaoServiceTest {
 
         assertThat(service.atualizar(id, entityAtualiza))
                 .isNotNull()
-                .hasFieldOrPropertyWithValue("tempoVotacao", LocalTime.of(0, 0, 5));
+                .hasFieldOrPropertyWithValue("tempoVotacao",
+                        LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0));
     }
 
     @Test

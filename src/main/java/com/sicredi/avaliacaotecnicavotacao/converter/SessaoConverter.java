@@ -20,6 +20,7 @@ public class SessaoConverter {
         return SessaoEntity.builder()
                 .tempoVotacao(request.getTempoVotacao())
                 .pauta(pautaBuilder(request.getIdPauta()))
+                .statusAberto(true)
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class SessaoConverter {
                 .id(entity.getId())
                 .tempoVotacao(entity.getTempoVotacao())
                 .pauta(pautaConverter.entityToResponseDto(entity.getPauta()))
+                .statusAberto(entity.isStatusAberto())
                 .build();
     }
 

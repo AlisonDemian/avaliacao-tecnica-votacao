@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 public class VotoResponseDto {
 
-    private Long id;
     private SessaoResponseDto sessao;
     private AssociadoResponseDto associado;
+    private String voto;
 }

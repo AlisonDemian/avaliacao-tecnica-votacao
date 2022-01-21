@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +14,8 @@ import java.time.LocalTime;
 public class SessaoRequestDto {
 
     @NotNull
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime tempoVotacao;
+    @JsonFormat(pattern = "yyyy-MM-dd-HH-mm-ss")
+    private LocalDateTime tempoVotacao;
 
     @NotNull
     private Long idPauta;

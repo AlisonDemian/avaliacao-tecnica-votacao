@@ -34,6 +34,11 @@ public class PautaService {
         return repository.save(entityAtualizada);
     }
 
+    public void atualizaPautaComSessaoEncerrada(Long id, String status) {
+        buscarPorId(id);
+        repository.atualizaPautaComSessaoEncerrada(id, status);
+    }
+
     public void deletar(Long id) {
         buscarPorId(id);
         repository.deleteById(id);

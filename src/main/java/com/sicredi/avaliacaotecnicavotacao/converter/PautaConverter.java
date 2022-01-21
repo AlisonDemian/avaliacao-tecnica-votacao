@@ -11,9 +11,14 @@ import java.util.stream.Collectors;
 @Service
 public class PautaConverter {
 
+    private static final String STATUS_VOTACAO = "em aberto";
+
     public PautaEntity requestDtoToEntity(PautaRequestDto request) {
         return PautaEntity.builder()
                 .tema(request.getTema())
+                .statusVotacao(STATUS_VOTACAO)
+                .votosNao(0)
+                .votosSim(0)
                 .build();
     }
 
@@ -21,6 +26,7 @@ public class PautaConverter {
         return PautaResponseDto.builder()
                 .id(entity.getId())
                 .tema(entity.getTema())
+                .statusVotacao(entity.getStatusVotacao())
                 .build();
     }
 

@@ -11,4 +11,5 @@ public class PautaResponseDto {
 
     private Long id;
     private String tema;
+    private String statusVotacao;
 }

@@ -17,18 +17,18 @@ class AssociadoConverterTest {
     @Test
     void requestDtoToEntity() {
 
-        assertEquals(geraEntity().getCpf(), converter.requestDtoToEntity(geraRequestDto()).getCpf());
+        assertEquals(geraAssociadoEntity().getCpf(), converter.requestDtoToEntity(geraAssociadoRequestDto()).getCpf());
     }
 
     @Test
     void entityToResponseDto() {
-        assertEquals(geraResponseDto().getCpf(), converter.entityToResponseDto(geraEntity()).getCpf());
+        assertEquals(geraAssociadoResponseDto().getCpf(), converter.entityToResponseDto(geraAssociadoEntity()).getCpf());
 
     }
 
     @Test
     void entityListToResponseDtoList() {
-        assertEquals(geraResponseDtoList().get(0).getCpf(),
-                converter.entityListToResponseDtoList(geraEntityList()).get(0).getCpf());
+        assertEquals(geraAssociadoResponseDtoList().get(0).getCpf(),
+                converter.entityListToResponseDtoList(geraAssociadoEntityList()).get(0).getCpf());
     }
 }

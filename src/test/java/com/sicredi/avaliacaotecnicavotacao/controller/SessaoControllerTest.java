@@ -45,10 +45,10 @@ class SessaoControllerTest {
         when(service.criar(any(SessaoEntity.class)))
                 .thenReturn(SessaoUtils.geraSessaoEntity());
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
-                .thenReturn(SessaoUtils.geraSessaoResponse());
+                .thenReturn(SessaoUtils.geraSessaoResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = post("/sessoes/criar")
-                .content(mapper.writeValueAsString(SessaoUtils.geraSessaoRequest()))
+                .content(mapper.writeValueAsString(SessaoUtils.geraSessaoRequestDto()))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
@@ -75,7 +75,7 @@ class SessaoControllerTest {
         when(service.buscarPorId(id))
                 .thenReturn(geraSessaoEntity());
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
-                .thenReturn(geraSessaoResponse());
+                .thenReturn(geraSessaoResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = get("/sessoes/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -92,10 +92,10 @@ class SessaoControllerTest {
         when(service.atualizar(anyLong(), any(SessaoEntity.class)))
                 .thenReturn(geraSessaoEntity());
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
-                .thenReturn(geraSessaoResponse());
+                .thenReturn(geraSessaoResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = put("/sessoes/atualizar/{id}", anyLong())
-                .content(mapper.writeValueAsString(geraSessaoRequest()))
+                .content(mapper.writeValueAsString(geraSessaoRequestDto()))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)

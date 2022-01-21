@@ -55,5 +55,4 @@ public class SessaoController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
 }

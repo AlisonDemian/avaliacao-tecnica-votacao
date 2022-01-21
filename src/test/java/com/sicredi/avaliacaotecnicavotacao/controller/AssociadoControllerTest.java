@@ -35,17 +35,17 @@ class AssociadoControllerTest {
 
     @Test
     void quandoCriarAssociado_retornaStatusCreated() throws Exception {
-        AssociadoEntity entity = geraEntity();
+        AssociadoEntity entity = geraAssociadoEntity();
 
         when(converter.requestDtoToEntity(any(AssociadoRequestDto.class)))
                 .thenReturn(entity);
         when(service.criar(any(AssociadoEntity.class)))
                 .thenReturn(entity);
         when(converter.entityToResponseDto(any(AssociadoEntity.class)))
-                .thenReturn(geraResponseDto());
+                .thenReturn(geraAssociadoResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = post("/associados/criar")
-                .content(mapper.writeValueAsString(geraRequestDto()))
+                .content(mapper.writeValueAsString(geraAssociadoRequestDto()))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
@@ -56,9 +56,9 @@ class AssociadoControllerTest {
     @Test
     void quandoListarAssociados_retornaStatusOk() throws Exception {
         when(service.listar())
-                .thenReturn(geraEntityList());
+                .thenReturn(geraAssociadoEntityList());
         when(converter.entityListToResponseDtoList(anyList()))
-                .thenReturn(geraResponseDtoList());
+                .thenReturn(geraAssociadoResponseDtoList());
 
         MockHttpServletRequestBuilder requestBuilder = get("/associados")
                 .contentType(MediaType.APPLICATION_JSON);
@@ -70,9 +70,9 @@ class AssociadoControllerTest {
     @Test
     void quandoBuscarPorId_retornaStatusOk() throws Exception {
         when(service.buscarPorId(anyLong()))
-                .thenReturn(geraEntity());
+                .thenReturn(geraAssociadoEntity());
         when(converter.entityToResponseDto(any(AssociadoEntity.class)))
-                .thenReturn(geraResponseDto());
+                .thenReturn(geraAssociadoResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = get("/associados/{id}", anyLong())
                 .contentType(MediaType.APPLICATION_JSON);
@@ -83,17 +83,17 @@ class AssociadoControllerTest {
 
     @Test
     void quandoAtualizar_retornaStatusOk() throws Exception {
-        AssociadoEntity entity = geraEntity();
+        AssociadoEntity entity = geraAssociadoEntity();
 
         when(converter.requestDtoToEntity(any(AssociadoRequestDto.class)))
                 .thenReturn(entity);
         when(service.atualizar(anyLong(), any(AssociadoEntity.class)))
                 .thenReturn(entity);
         when(converter.entityToResponseDto(any(AssociadoEntity.class)))
-                .thenReturn(geraResponseDto());
+                .thenReturn(geraAssociadoResponseDto());
 
         MockHttpServletRequestBuilder requestBuilder = put("/associados/atualizar/{id}", anyLong())
-                .content(mapper.writeValueAsString(geraRequestDto()))
+                .content(mapper.writeValueAsString(geraAssociadoRequestDto()))
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
