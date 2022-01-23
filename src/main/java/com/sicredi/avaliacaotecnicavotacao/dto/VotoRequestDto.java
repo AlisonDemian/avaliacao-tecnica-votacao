@@ -13,12 +13,12 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class VotoRequestDto {
 
-    @NotNull
-    @Min(0)
-    @Max(1)
+    @NotNull(message = "Campo voto é obrigatório")
+    @Min(value = 0, message = "O mínimo é 0")
+    @Max(value = 1, message = "O máximo é 1")
     private Integer voto;
-    @NotNull
+    @NotNull(message = "Campo sessao é obrigatório")
     private Long idSessao;
-    @NotNull
+    @NotNull(message = "Campo associado é obrigatório")
     private Long idAssociado;
 }

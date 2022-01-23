@@ -31,6 +31,10 @@ public class SessaoService {
         return repository.findByStatusAberto(true);
     }
 
+    public boolean verificaSePautaNaoTemSessao(Long idPauta) {
+        return repository.verificaSePautaNaoTemSessao(idPauta);
+    }
+
     public SessaoEntity atualizar(Long id, SessaoEntity entityAtualizada) {
         buscarPorId(id);
         entityAtualizada.setId(id);

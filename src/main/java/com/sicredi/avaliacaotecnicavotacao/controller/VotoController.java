@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,7 +22,7 @@ public class VotoController {
     private final VotacaoBusiness votacaoBusiness;
     private final VotoConverter converter;
 
-    @PutMapping("/votar")
+    @PostMapping("/votar")
     public ResponseEntity<VotoResponseDto> votar(@Valid @RequestBody VotoRequestDto requestDto) {
         return ResponseEntity
                 .status(HttpStatus.OK)

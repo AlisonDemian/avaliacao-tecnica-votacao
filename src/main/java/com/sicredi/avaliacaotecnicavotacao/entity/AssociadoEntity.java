@@ -18,5 +18,4 @@ public class AssociadoEntity {
     private Long id;
 
     private String cpf;
-
 }

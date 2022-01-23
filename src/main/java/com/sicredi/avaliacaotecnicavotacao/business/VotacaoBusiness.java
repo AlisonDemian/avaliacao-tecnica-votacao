@@ -1,12 +1,12 @@
 package com.sicredi.avaliacaotecnicavotacao.business;
 
-import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
-import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.VotoSessaoEntity;
+import com.sicredi.avaliacaotecnicavotacao.entity.VotoSessaoEntityKey;
 import com.sicredi.avaliacaotecnicavotacao.service.AssociadoService;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
+import com.sicredi.avaliacaotecnicavotacao.service.VotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,23 +17,29 @@ public class VotacaoBusiness {
     private final SessaoService sessaoService;
     private final AssociadoService associadoService;
     private final PautaService pautaService;
+    private final VotoService votoService;
 
     public VotoSessaoEntity votar(VotoSessaoEntity votoEntity) {
-        SessaoEntity sessao = validaSessao(votoEntity.getSessao().getId());
-        AssociadoEntity associado = validaAssociado(votoEntity.getAssociado().getId());
-        votoEntity.setSessao(sessao);
-        votoEntity.setAssociado(associado);
+        Long idAssociado = votoEntity.getAssociado().getId();
+        Long idSessao = votoEntity.getSessao().getId();
+
+        validaSessaoEAssociado(idAssociado, idSessao);
+
+        votoEntity.setSessao(sessaoService.buscarPorId(votoEntity.getSessao().getId()));
+        votoEntity.setAssociado(associadoService.buscarPorId(votoEntity.getAssociado().getId()));
+        votoEntity.setId(
+                new VotoSessaoEntityKey(votoEntity.getSessao().getId(),
+                        votoEntity.getAssociado().getId()));
 
         atualizaVotos(votoEntity);
-        return votoEntity;
+        return votoService.salvar(votoEntity);
+
     }
 
-    private SessaoEntity validaSessao(Long idSessao) {
-        return sessaoService.buscarPorId(idSessao);
-    }
-
-    private AssociadoEntity validaAssociado(Long idAssociado) {
-        return associadoService.buscarPorId(idAssociado);
+    private void validaSessaoEAssociado(Long idAssociado, Long idSessao) {
+        sessaoService.buscarPorId(idSessao);
+        associadoService.buscarPorId(idAssociado);
+        votoService.verificaVotoMultiplo(idAssociado, idSessao);
     }
 
     private void atualizaVotos(VotoSessaoEntity votoEntity) {
@@ -43,15 +49,15 @@ public class VotacaoBusiness {
         if (voto.equals(1)) {
             addVoto = votoEntity.getSessao().getPauta().getVotosSim();
             votoEntity.getSessao().getPauta().setVotosSim(addVoto + 1);
-            persistirVoto(votoEntity.getSessao().getPauta());
+            persisteVoto(votoEntity.getSessao().getPauta());
         } else {
             addVoto = votoEntity.getSessao().getPauta().getVotosNao();
             votoEntity.getSessao().getPauta().setVotosNao(addVoto + 1);
-            persistirVoto(votoEntity.getSessao().getPauta());
+            persisteVoto(votoEntity.getSessao().getPauta());
         }
     }
 
-    private PautaEntity persistirVoto(PautaEntity pautaEntity) {
+    private PautaEntity persisteVoto(PautaEntity pautaEntity) {
         return pautaService.atualizar(pautaEntity.getId(), pautaEntity);
     }
 }

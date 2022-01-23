@@ -3,6 +3,7 @@ package com.sicredi.avaliacaotecnicavotacao.configuration;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
+import com.sicredi.avaliacaotecnicavotacao.service.VotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,16 +13,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum.*;
+
 @RequiredArgsConstructor
 @Configuration
 @EnableScheduling
 public class SessaoSchedulerConfiguration {
 
-    private static final String STATUS_REPROVADA = "reprovada";
-    private static final String STATUS_APROVADA = "aprovada";
-    private static final String STATUS_EMPATE = "empate";
     private final SessaoService sessaoService;
     private final PautaService pautaService;
+    private final VotoService votoService;
 
     @Scheduled(fixedDelay = 1000)
     public void verificaSessaoStatusTask() {
@@ -36,15 +37,16 @@ public class SessaoSchedulerConfiguration {
     private void atualizaPautaVotada(SessaoEntity sessao) {
         Integer totalVotosSim = sessao.getPauta().getVotosSim();
         Integer totalVotosNao = sessao.getPauta().getVotosNao();
+        votoService.deletarVotacoes(sessao.getId());
 
         if (totalVotosSim > totalVotosNao) {
-            pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), STATUS_APROVADA);
+            pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), APROVADA.status);
             deletarSessao(sessao);
         } else if (Objects.equals(totalVotosSim, totalVotosNao)) {
-            pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), STATUS_EMPATE);
+            pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), EMPATE.status);
             deletarSessao(sessao);
         } else {
-            pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), STATUS_REPROVADA);
+            pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), REPROVADA.status);
             deletarSessao(sessao);
         }
     }
