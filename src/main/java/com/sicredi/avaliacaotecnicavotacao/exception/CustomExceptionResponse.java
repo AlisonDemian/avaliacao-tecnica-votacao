@@ -5,16 +5,33 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @Setter
-public class CustomErrorResponse {
+public class CustomExceptionResponse {
 
     private String message;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cause;
 
-    public CustomErrorResponse(String msg) {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String parameter;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> errors;
+
+    public CustomExceptionResponse(String msg) {
         message = msg;
+    }
+
+    public CustomExceptionResponse(String msg, String param) {
+        message = msg;
+        parameter = param;
+    }
+
+    public CustomExceptionResponse(List<String> errors) {
+        this.errors = errors;
     }
 }

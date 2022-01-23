@@ -12,11 +12,35 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ElementNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity elementNotFoundExceptionHandler(ElementNotFoundException exception) {
-
-        CustomErrorResponse errorResponse = new CustomErrorResponse(exception.getMessage());
+    public ResponseEntity<CustomExceptionResponse> elementNotFoundExceptionHandler(ElementNotFoundException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(errorResponse);
+                .body(new CustomExceptionResponse(exception.getMessage()));
     }
+
+    @ExceptionHandler(ElementAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<CustomExceptionResponse> elementNotFoundExceptionHandler(
+            ElementAlreadyExistsException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new CustomExceptionResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler(BusinessGenericException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<CustomExceptionResponse> businessGenericExceptionHandler(BusinessGenericException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new CustomExceptionResponse(exception.getMessage()));
+    }
+
+//    @Override
+//    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
+//                                                               HttpHeaders headers, HttpStatus status, WebRequest request) {
+//        return ResponseEntity
+//                .status(status)
+//                .body(new CustomExceptionResponse(exception.getAllErrors().toString()));
+//    }
+
 }
