@@ -35,7 +35,7 @@ class PautaControllerTest {
 
     @Test
     void quando_criarPauta_retornaStatusCreated() throws Exception {
-        PautaEntity entity = geraPautaEntity();
+        PautaEntity entity = geraPautaAbertaEntity();
 
         when(converter.requestDtoToEntity(any(PautaRequestDto.class)))
                 .thenReturn(entity);
@@ -69,7 +69,7 @@ class PautaControllerTest {
     @Test
     void quando_buscarPautaPorId_retornaStatusOk() throws Exception {
         when(service.buscarPorId(anyLong()))
-                .thenReturn(geraPautaEntity());
+                .thenReturn(geraPautaAbertaEntity());
         when(converter.entityToResponseDto(any(PautaEntity.class)))
                 .thenReturn(geraPautaResponse());
 
@@ -83,9 +83,9 @@ class PautaControllerTest {
     @Test
     void quando_atualizarPauta_retornaStatusOk() throws Exception {
         when(converter.requestDtoToEntity(any(PautaRequestDto.class)))
-                .thenReturn(geraPautaEntity());
+                .thenReturn(geraPautaAbertaEntity());
         when(service.atualizar(anyLong(), any(PautaEntity.class)))
-                .thenReturn(geraPautaEntity());
+                .thenReturn(geraPautaAbertaEntity());
         when(converter.entityToResponseDto(any(PautaEntity.class)))
                 .thenReturn(geraPautaResponse());
 

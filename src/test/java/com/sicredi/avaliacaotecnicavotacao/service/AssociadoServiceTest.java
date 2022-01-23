@@ -61,12 +61,13 @@ class AssociadoServiceTest {
 
     @Test
     void quandoBuscarPorId_throwException() {
-        when(repository.findById(anyLong()))
+        Long id = anyLong();
+        when(repository.findById(id))
                 .thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> service.buscarPorId(anyLong()))
+        assertThatThrownBy(() -> service.buscarPorId(id))
                 .isInstanceOf(ElementNotFoundException.class)
-                .hasMessage("Associado não encontrado");
+                .hasMessage(String.format("Associado com id %d não encontrado", id));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.sicredi.avaliacaotecnicavotacao.controller;
 
+import com.sicredi.avaliacaotecnicavotacao.business.SessaoBusiness;
 import com.sicredi.avaliacaotecnicavotacao.converter.SessaoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping(path = "/sessoes")
 public class SessaoController {
 
+    private final SessaoBusiness business;
     private final SessaoService service;
     private final SessaoConverter converter;
 
@@ -24,7 +26,7 @@ public class SessaoController {
     public ResponseEntity<SessaoResponseDto> criar(@Valid @RequestBody SessaoRequestDto request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(converter.entityToResponseDto(service.criar(converter.requestToEntity(request))));
+                .body(converter.entityToResponseDto(business.criar(converter.requestToEntity(request))));
     }
 
     @GetMapping

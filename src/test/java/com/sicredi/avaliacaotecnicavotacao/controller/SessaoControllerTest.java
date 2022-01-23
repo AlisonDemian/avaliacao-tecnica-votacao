@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sicredi.avaliacaotecnicavotacao.business.SessaoBusiness;
 import com.sicredi.avaliacaotecnicavotacao.converter.SessaoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
@@ -25,10 +26,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SessaoControllerTest {
 
     private final ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     private MockMvc mockMvc;
+
     @MockBean
     private SessaoService service;
+
+    @MockBean
+    private SessaoBusiness business;
+
     @MockBean
     private SessaoConverter converter;
 
@@ -42,7 +49,7 @@ class SessaoControllerTest {
 
         when(converter.requestToEntity(any(SessaoRequestDto.class)))
                 .thenReturn(SessaoUtils.geraSessaoEntity());
-        when(service.criar(any(SessaoEntity.class)))
+        when(business.criar(any(SessaoEntity.class)))
                 .thenReturn(SessaoUtils.geraSessaoEntity());
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
                 .thenReturn(SessaoUtils.geraSessaoResponseDto());

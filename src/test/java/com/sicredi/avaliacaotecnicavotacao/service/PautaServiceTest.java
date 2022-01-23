@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraListaPautaEntity;
-import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaEntity;
+import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaAbertaEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,7 +31,7 @@ class PautaServiceTest {
 
     @Test
     void quandoCriarPauta_retornaSucesso() {
-        PautaEntity entity = geraPautaEntity();
+        PautaEntity entity = geraPautaAbertaEntity();
 
         when(repository.save(any(PautaEntity.class)))
                 .thenReturn(entity);
@@ -55,7 +55,7 @@ class PautaServiceTest {
         Long id = anyLong();
 
         when(repository.findById(id))
-                .thenReturn(Optional.of(geraPautaEntity()));
+                .thenReturn(Optional.of(geraPautaAbertaEntity()));
 
         assertNotNull(service.buscarPorId(id));
     }
@@ -74,11 +74,11 @@ class PautaServiceTest {
 
     @Test
     void quandoAtualizarPorId_retornaSucesso() {
-        PautaEntity entity = geraPautaEntity();
+        PautaEntity entity = geraPautaAbertaEntity();
         entity.setTema("teste atualizado");
 
         when(repository.findById(anyLong()))
-                .thenReturn(Optional.of(geraPautaEntity()));
+                .thenReturn(Optional.of(geraPautaAbertaEntity()));
 
         when(repository.save(any(PautaEntity.class)))
                 .thenReturn(entity);
@@ -93,7 +93,7 @@ class PautaServiceTest {
     void quandoDeletar_retornaSucesso() {
 
         when(repository.findById(anyLong()))
-                .thenReturn(Optional.of(geraPautaEntity()));
+                .thenReturn(Optional.of(geraPautaAbertaEntity()));
 
         service.deletar(anyLong());
 

@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class PautaService {
     private final PautaRepository repository;
 
     public PautaEntity criar(PautaEntity entity) {
+        buscarPautaPorTema(entity.getTema());
         return repository.save(entity);
     }
 
@@ -24,7 +26,13 @@ public class PautaService {
 
     public PautaEntity buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Pauta não encontrada")); //
+                .orElseThrow(() -> new ElementNotFoundException("Pauta não encontrada"));
+    }
+
+    public void buscarPautaPorTema(String tema) {
+        if (repository.buscaPorTema(tema)) {
+            throw new ElementAlreadyExistsException(String.format("Pauta com tema '%s' ja existe", tema));
+        }
     }
 
     public PautaEntity atualizar(Long id, PautaEntity entityAtualizada) {

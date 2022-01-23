@@ -3,6 +3,7 @@ package com.sicredi.avaliacaotecnicavotacao.converter;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
+import com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,12 +12,10 @@ import java.util.stream.Collectors;
 @Service
 public class PautaConverter {
 
-    private static final String STATUS_VOTACAO = "em aberto";
-
     public PautaEntity requestDtoToEntity(PautaRequestDto request) {
         return PautaEntity.builder()
                 .tema(request.getTema())
-                .statusVotacao(STATUS_VOTACAO)
+                .statusVotacao(PautaStatusEnum.EM_ABERTO.getStatus())
                 .votosNao(0)
                 .votosSim(0)
                 .build();

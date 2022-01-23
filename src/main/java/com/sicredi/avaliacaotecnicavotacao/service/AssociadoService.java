@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.AssociadoRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class AssociadoService {
     private final AssociadoRepository repository;
 
     public AssociadoEntity criar(AssociadoEntity entity) {
+        buscarPorCpf(entity.getCpf());
         return repository.save(entity);
     }
 
@@ -24,11 +26,18 @@ public class AssociadoService {
 
     public AssociadoEntity buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Associado não encontrado"));
+                .orElseThrow(() -> new ElementNotFoundException(String.format("Associado com id %d não encontrado", id)));
+    }
+
+    public void buscarPorCpf(String cpf) {
+        if (repository.buscarPorCpf(cpf)) {
+            throw new ElementAlreadyExistsException(String.format("Associado com o CPF %s já registrado", cpf));
+        }
     }
 
     public AssociadoEntity atualizar(Long id, AssociadoEntity entityAtualizada) {
         buscarPorId(id);
+        buscarPorCpf(entityAtualizada.getCpf());
         entityAtualizada.setId(id);
         return repository.save(entityAtualizada);
     }

@@ -16,12 +16,12 @@ class PautaConverterTest {
 
     @Test
     void quandoConverter_requestDtoToEntity_retornaSucesso() {
-        assertEquals(geraPautaEntity().getTema(), converter.requestDtoToEntity(geraPautaRequest()).getTema());
+        assertEquals(geraPautaAbertaEntity().getTema(), converter.requestDtoToEntity(geraPautaRequest()).getTema());
     }
 
     @Test
     void quandoConverter_entityToResponseDto_retornaSucesso() {
-        assertEquals(geraPautaResponse().getTema(), converter.entityToResponseDto(geraPautaEntity()).getTema());
+        assertEquals(geraPautaResponse().getTema(), converter.entityToResponseDto(geraPautaAbertaEntity()).getTema());
     }
 
     @Test

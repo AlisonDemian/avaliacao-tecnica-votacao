@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
-import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaEntity;
+import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaAbertaEntity;
 import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaResponse;
 import static java.util.Collections.singletonList;
 
@@ -18,7 +18,8 @@ public abstract class SessaoUtils {
         return SessaoEntity.builder()
                 .id(1L)
                 .tempoVotacao(LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0))
-                .pauta(geraPautaEntity())
+                .pauta(geraPautaAbertaEntity())
+                .statusAberto(true)
                 .build();
     }
 
@@ -27,6 +28,7 @@ public abstract class SessaoUtils {
                 .id(1L)
                 .tempoVotacao(LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0))
                 .pauta(geraPautaResponse())
+                .statusAberto(true)
                 .build();
     }
 

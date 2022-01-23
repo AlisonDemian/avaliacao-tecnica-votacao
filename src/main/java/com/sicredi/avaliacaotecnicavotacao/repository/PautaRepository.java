@@ -17,4 +17,9 @@ public interface PautaRepository extends JpaRepository<PautaEntity, Long> {
             "SET p.statusVotacao = :status " +
             "WHERE p.id = :id")
     void atualizaPautaComSessaoEncerrada(Long id, String status);
+
+    @Query("SELECT COUNT(*) > 0" +
+            " FROM PautaEntity p" +
+            " WHERE p.tema = :tema")
+    boolean buscaPorTema(String tema);
 }

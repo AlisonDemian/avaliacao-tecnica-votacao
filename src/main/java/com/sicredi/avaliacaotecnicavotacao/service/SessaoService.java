@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.SessaoRepository;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,12 @@ public class SessaoService {
 
     public List<SessaoEntity> listarSessaoStatusAberto() {
         return repository.findByStatusAberto(true);
+    }
+
+    public void verificaSePautaNaoTemSessao(Long idPauta) {
+        if (!repository.verificaSePautaNaoTemSessao(idPauta)) {
+            throw new ElementAlreadyExistsException(String.format("pauta %d ja possui sessão", idPauta));
+        }
     }
 
     public SessaoEntity atualizar(Long id, SessaoEntity entityAtualizada) {

@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import static com.sicredi.avaliacaotecnicavotacao.utils.VotoUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +42,7 @@ class VotoControllerTest {
         when(votoConverter.entityToResponseDto(any(VotoSessaoEntity.class)))
                 .thenReturn(geraVotoSimResponseDto());
 
-        MockHttpServletRequestBuilder requestBuilder = put("/votacao/votar")
+        MockHttpServletRequestBuilder requestBuilder = post("/votacao/votar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(geraVotoRequestDto()));
 
