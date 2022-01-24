@@ -24,28 +24,28 @@ public class PautaController {
     private final PautaConverter converter;
 
     @PostMapping("/criar")
-    public ResponseEntity<PautaResponseDto> criarPauta(@Valid @RequestBody PautaRequestDto request) {
+    public ResponseEntity<PautaResponseDto> criar(@Valid @RequestBody PautaRequestDto request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(converter.entityToResponseDto(service.criar(converter.requestDtoToEntity(request))));
     }
 
     @GetMapping
-    public ResponseEntity<List<PautaResponseDto>> listarPautas() {
+    public ResponseEntity<List<PautaResponseDto>> listar() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(converter.entityListToResponseDtoList(service.listar()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PautaResponseDto> buscarPautaPorId(@PathVariable Long id) {
+    public ResponseEntity<PautaResponseDto> buscarPorId(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(converter.entityToResponseDto(service.buscarPorId(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<PautaResponseDto> atualizarPauta(@PathVariable Long id,
+    public ResponseEntity<PautaResponseDto> atualizar(@PathVariable Long id,
                                                            @Valid @RequestBody PautaRequestDto request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -54,7 +54,7 @@ public class PautaController {
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<PautaResponseDto> deletarPauta(@PathVariable Long id) {
+    public ResponseEntity<PautaResponseDto> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
