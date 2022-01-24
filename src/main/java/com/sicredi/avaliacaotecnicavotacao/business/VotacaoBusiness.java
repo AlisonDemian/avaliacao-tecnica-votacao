@@ -38,6 +38,7 @@ public class VotacaoBusiness {
 
     private void verificaVotoMultiplo(VotoSessaoEntity votoEntity) {
         votoService.verificaVotoMultiplo(votoEntity);
+
     }
 
     private void atualizaVotos(VotoSessaoEntity votoEntity) {
