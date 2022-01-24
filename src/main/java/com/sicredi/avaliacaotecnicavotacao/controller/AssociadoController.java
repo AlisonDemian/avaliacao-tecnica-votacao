@@ -4,6 +4,7 @@ import com.sicredi.avaliacaotecnicavotacao.converter.AssociadoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.AssociadoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.AssociadoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.service.AssociadoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "associado")
 @RequestMapping(path = "/associados")
 public class AssociadoController {
 

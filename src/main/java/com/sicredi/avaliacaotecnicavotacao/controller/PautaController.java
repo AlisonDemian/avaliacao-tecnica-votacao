@@ -4,6 +4,7 @@ import com.sicredi.avaliacaotecnicavotacao.converter.PautaConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
+@Tag(name = "pauta")
 @RequestMapping(path = "/pautas")
 public class PautaController {
 

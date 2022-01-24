@@ -5,6 +5,7 @@ import com.sicredi.avaliacaotecnicavotacao.converter.SessaoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "sessao")
 @RequestMapping(path = "/sessoes")
 public class SessaoController {
 
