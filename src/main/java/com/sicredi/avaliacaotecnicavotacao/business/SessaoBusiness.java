@@ -1,5 +1,6 @@
 package com.sicredi.avaliacaotecnicavotacao.business;
 
+
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum;
@@ -20,6 +21,7 @@ public class SessaoBusiness {
 
     public SessaoEntity criar(SessaoEntity entity) {
         Long idPauta = entity.getPauta().getId();
+
         PautaEntity pautaEntity = pautaService.buscarPorId(idPauta);
         sessaoService.verificaSePautaNaoTemSessao(idPauta);
         verificaSePautaEstaAberta(idPauta, pautaEntity, entity);
