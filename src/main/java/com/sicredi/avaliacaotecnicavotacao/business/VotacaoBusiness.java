@@ -25,8 +25,8 @@ public class VotacaoBusiness {
 
         verificaVotoMultiplo(votoEntity);
 
-        votoEntity.setSessao(sessaoService.buscarPorId(votoEntity.getSessao().getId()));
-        votoEntity.setAssociado(associadoService.buscarPorId(votoEntity.getAssociado().getId()));
+        votoEntity.setSessao(sessaoService.buscarPorId(idSessao));
+        votoEntity.setAssociado(associadoService.buscarPorId(idAssociado));
         votoEntity.setId(
                 new VotoSessaoEntityKey(votoEntity.getSessao().getId(),
                         votoEntity.getAssociado().getId()));
