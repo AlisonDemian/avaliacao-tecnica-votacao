@@ -31,7 +31,7 @@ public class SessaoSchedulerConfiguration {
         sessoes.stream()
                 .filter(sessao -> sessao.getTempoVotacao().isEqual(LocalDateTime.now())
                         || sessao.getTempoVotacao().isBefore(LocalDateTime.now()))
-                .forEach(sessao -> atualizaPautaVotada(sessao));
+                .forEach(this::atualizaPautaVotada);
     }
 
     private void atualizaPautaVotada(SessaoEntity sessao) {
@@ -39,16 +39,14 @@ public class SessaoSchedulerConfiguration {
         Integer totalVotosNao = sessao.getPauta().getVotosNao();
         votoService.deletarVotacoes(sessao.getId());
 
-        if (totalVotosSim > totalVotosNao) {
+        if ( totalVotosSim > totalVotosNao ) {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), APROVADA.status);
-            deletarSessao(sessao);
-        } else if (Objects.equals(totalVotosSim, totalVotosNao)) {
+        } else if ( Objects.equals(totalVotosSim, totalVotosNao )) {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), EMPATE.status);
-            deletarSessao(sessao);
         } else {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), REPROVADA.status);
-            deletarSessao(sessao);
         }
+        deletarSessao(sessao);
     }
 
     private void deletarSessao(SessaoEntity sessao) {

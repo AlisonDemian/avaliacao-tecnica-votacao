@@ -24,21 +24,27 @@ public class VotacaoBusiness {
         Long idSessao = votoEntity.getSessao().getId();
 
         verificaVotoMultiplo(votoEntity);
+        verificaSessao(votoEntity, idSessao);
+        verificaAssociado(votoEntity, idAssociado);
 
-        votoEntity.setSessao(sessaoService.buscarPorId(idSessao));
-        votoEntity.setAssociado(associadoService.buscarPorId(idAssociado));
         votoEntity.setId(
                 new VotoSessaoEntityKey(votoEntity.getSessao().getId(),
                         votoEntity.getAssociado().getId()));
-
         atualizaVotos(votoEntity);
         return votoService.salvar(votoEntity);
 
     }
 
+    private void verificaAssociado(VotoSessaoEntity votoEntity, Long idAssociado) {
+        votoEntity.setAssociado(associadoService.buscarPorId(idAssociado));
+    }
+
+    private void verificaSessao(VotoSessaoEntity votoEntity, Long idSessao) {
+        votoEntity.setSessao(sessaoService.buscarPorId(idSessao));
+    }
+
     private void verificaVotoMultiplo(VotoSessaoEntity votoEntity) {
         votoService.verificaVotoMultiplo(votoEntity);
-
     }
 
     private void atualizaVotos(VotoSessaoEntity votoEntity) {
@@ -48,15 +54,14 @@ public class VotacaoBusiness {
         if (voto.equals(1)) {
             addVoto = votoEntity.getSessao().getPauta().getVotosSim();
             votoEntity.getSessao().getPauta().setVotosSim(addVoto + 1);
-            persisteVoto(votoEntity.getSessao().getPauta());
         } else {
             addVoto = votoEntity.getSessao().getPauta().getVotosNao();
             votoEntity.getSessao().getPauta().setVotosNao(addVoto + 1);
-            persisteVoto(votoEntity.getSessao().getPauta());
         }
+        persisteVoto(votoEntity.getSessao().getPauta());
     }
 
-    private PautaEntity persisteVoto(PautaEntity pautaEntity) {
-        return pautaService.atualizar(pautaEntity.getId(), pautaEntity);
+    private void persisteVoto(PautaEntity pautaEntity) {
+        pautaService.atualizar(pautaEntity.getId(), pautaEntity);
     }
 }

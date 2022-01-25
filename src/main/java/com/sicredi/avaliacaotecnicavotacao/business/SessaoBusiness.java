@@ -19,22 +19,22 @@ public class SessaoBusiness {
     private final PautaService pautaService;
     private final SessaoService sessaoService;
 
-    public SessaoEntity criar(SessaoEntity entity) {
-        Long idPauta = entity.getPauta().getId();
+    public SessaoEntity criar(SessaoEntity sessaoEntity) {
+        Long idPauta = sessaoEntity.getPauta().getId();
 
         PautaEntity pautaEntity = pautaService.buscarPorId(idPauta);
         sessaoService.verificaSePautaNaoTemSessao(idPauta);
-        verificaSePautaEstaAberta(idPauta, pautaEntity, entity);
-        return sessaoService.criar(entity);
+        verificaSePautaEstaAberta(pautaEntity, sessaoEntity);
+        return sessaoService.criar(sessaoEntity);
 
     }
 
-    private void verificaSePautaEstaAberta(Long idPauta, PautaEntity pautaEntity, SessaoEntity sessaoEntity) {
+    private void verificaSePautaEstaAberta(PautaEntity pautaEntity, SessaoEntity sessaoEntity) {
         String statusPauta = pautaEntity.getStatusVotacao();
         if (Objects.equals(statusPauta, PautaStatusEnum.EM_ABERTO.status)) {
             sessaoEntity.setPauta(pautaEntity);
         } else {
-            throw new BusinessGenericException(String.format("pauta %d ja foi votada", idPauta));
+            throw new BusinessGenericException(String.format("pauta %d ja foi votada", pautaEntity.getId()));
         }
     }
 }
