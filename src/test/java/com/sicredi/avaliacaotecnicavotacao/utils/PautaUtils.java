@@ -25,6 +25,7 @@ public abstract class PautaUtils {
         return PautaResponseDto.builder()
                 .id(1L)
                 .tema("Teste")
+                .statusVotacao(EM_ABERTO.getStatus())
                 .build();
     }
 

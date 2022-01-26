@@ -79,7 +79,7 @@ class SessaoServiceTest {
         when(repository.save(any(SessaoEntity.class)))
                 .thenReturn(entityAtualiza);
 
-        assertThat(service.atualizar(id, entityAtualiza))
+        assertThat(service.atualizar(id, entityAtualiza.getTempoVotacao()))
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("tempoVotacao",
                         LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0));

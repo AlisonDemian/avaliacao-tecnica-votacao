@@ -17,7 +17,7 @@ public abstract class SessaoUtils {
     public static SessaoEntity geraSessaoEntity() {
         return SessaoEntity.builder()
                 .id(1L)
-                .tempoVotacao(LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0))
+                .tempoVotacao(LocalDateTime.now().plusYears(1))
                 .pauta(geraPautaAbertaEntity())
                 .statusAberto(true)
                 .build();
@@ -26,7 +26,7 @@ public abstract class SessaoUtils {
     public static SessaoResponseDto geraSessaoResponseDto() {
         return SessaoResponseDto.builder()
                 .id(1L)
-                .tempoVotacao(LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0))
+                .tempoVotacao(LocalDateTime.now().plusYears(1))
                 .pauta(geraPautaResponse())
                 .statusAberto(true)
                 .build();
@@ -34,7 +34,7 @@ public abstract class SessaoUtils {
 
     public static SessaoRequestDto geraSessaoRequestDto() {
         return SessaoRequestDto.builder()
-                .tempoVotacao(LocalDateTime.of(2022, Month.JANUARY, 20, 13, 0, 0))
+                .tempoVotacao(LocalDateTime.now().plusYears(1))
                 .idPauta(1L)
                 .build();
     }

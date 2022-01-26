@@ -7,12 +7,17 @@ import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static java.time.format.DateTimeFormatter.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -47,11 +52,12 @@ public class SessaoController {
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<SessaoResponseDto> atualizar(@PathVariable Long id,
-                                                       @Valid @RequestBody SessaoRequestDto request) {
+                                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                                      @RequestParam(name = "tempoVotacao")
+                                                              LocalDateTime tempoVotacao) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(converter.entityToResponseDto(
-                        service.atualizar(id, converter.requestToEntity(request))));
+                .body(converter.entityToResponseDto(service.atualizar(id, tempoVotacao)));
     }
 
     @DeleteMapping("/deletar/{id}")

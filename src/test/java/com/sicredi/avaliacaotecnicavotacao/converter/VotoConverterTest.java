@@ -1,5 +1,6 @@
 package com.sicredi.avaliacaotecnicavotacao.converter;
 
+import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.VotoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
@@ -10,9 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.geraAssociadoResponseDto;
 import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.geraSessaoResponseDto;
 import static com.sicredi.avaliacaotecnicavotacao.utils.VotoUtils.*;
+import static com.sicredi.avaliacaotecnicavotacao.utils.VotoUtils.geraVotoSimResponseDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,26 +55,32 @@ class VotoConverterTest {
 
     @Test
     void quandoConverter_entityToResponseDto_comVotoSim_retornaSucesso() {
+        LocalDateTime tempo = LocalDateTime.now().plusYears(1);
         VotoSessaoEntity votoSessaoEntity = geraVotoEntity();
+        votoSessaoEntity.getSessao().setTempoVotacao(tempo);
+        VotoResponseDto votoResponseDto = geraVotoSimResponseDto();
+        votoResponseDto.getSessao().setTempoVotacao(tempo);
+        SessaoResponseDto sessaoResponseDto = geraSessaoResponseDto();
+        sessaoResponseDto.setTempoVotacao(tempo);
 
         when(associadoConverter.entityToResponseDto(any(AssociadoEntity.class)))
                 .thenReturn(geraAssociadoResponseDto());
         when(sessaoConverter.entityToResponseDto(any(SessaoEntity.class)))
-                .thenReturn(geraSessaoResponseDto());
+                .thenReturn(sessaoResponseDto);
 
         assertAll(
-                () -> assertThat(converter.entityToResponseDto(geraVotoEntity()))
+                () -> assertThat(converter.entityToResponseDto(votoSessaoEntity))
                         .isInstanceOf(VotoResponseDto.class),
 
-                () -> assertEquals("sim", converter.entityToResponseDto(geraVotoEntity()).getVoto()),
+                () -> assertEquals("sim", converter.entityToResponseDto(votoSessaoEntity).getVoto()),
 
-                () -> assertEquals(geraVotoSimResponseDto().getAssociado().getCpf(),
+                () -> assertEquals(votoResponseDto.getAssociado().getCpf(),
                         converter.entityToResponseDto(votoSessaoEntity).getAssociado().getCpf()),
 
-                () -> assertEquals(geraVotoSimResponseDto().getSessao().getPauta().getTema(),
+                () -> assertEquals(votoResponseDto.getSessao().getPauta().getTema(),
                         converter.entityToResponseDto(votoSessaoEntity).getSessao().getPauta().getTema()),
 
-                () -> assertEquals(geraVotoSimResponseDto().getSessao().getTempoVotacao(),
+                () -> assertEquals(votoResponseDto.getSessao().getTempoVotacao(),
                         converter.entityToResponseDto(votoSessaoEntity).getSessao().getTempoVotacao())
         );
     }

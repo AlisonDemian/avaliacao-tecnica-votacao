@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sicredi.avaliacaotecnicavotacao.business.SessaoBusiness;
 import com.sicredi.avaliacaotecnicavotacao.converter.SessaoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoRequestDto;
+import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
 import com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils;
@@ -15,6 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -94,15 +99,21 @@ class SessaoControllerTest {
 
     @Test
     void quandoAtualizar_retornarStatusOk() throws Exception {
-        when(converter.requestToEntity(any(SessaoRequestDto.class)))
-                .thenReturn(geraSessaoEntity());
-        when(service.atualizar(anyLong(), any(SessaoEntity.class)))
-                .thenReturn(geraSessaoEntity());
-        when(converter.entityToResponseDto(any(SessaoEntity.class)))
-                .thenReturn(geraSessaoResponseDto());
+        LocalDateTime tempo = LocalDateTime.now().plusYears(1);
+        String tempoFormatado = tempo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        SessaoEntity sessaoAtualizada = geraSessaoEntity();
+        sessaoAtualizada.setTempoVotacao(tempo);
+        SessaoResponseDto sessaoResponseDtoAtualizada = geraSessaoResponseDto();
+        sessaoResponseDtoAtualizada.setTempoVotacao(tempo);
 
-        MockHttpServletRequestBuilder requestBuilder = put("/sessoes/atualizar/{id}", anyLong())
-                .content(mapper.writeValueAsString(geraSessaoRequestDto()))
+        Long id = anyLong();
+        when(service.atualizar(id, any(LocalDateTime.class)))
+                .thenReturn(sessaoAtualizada);
+        when(converter.entityToResponseDto(any(SessaoEntity.class)))
+                .thenReturn(sessaoResponseDtoAtualizada);
+
+        MockHttpServletRequestBuilder requestBuilder = put("/sessoes/atualizar/{id}", id)
+                .param("tempoVotacao", tempoFormatado)
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)

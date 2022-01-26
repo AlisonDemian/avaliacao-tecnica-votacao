@@ -7,6 +7,7 @@ import com.sicredi.avaliacaotecnicavotacao.repository.SessaoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -39,9 +40,9 @@ public class SessaoService {
         }
     }
 
-    public SessaoEntity atualizar(Long id, SessaoEntity entityAtualizada) {
-        buscarPorId(id);
-        entityAtualizada.setId(id);
+    public SessaoEntity atualizar(Long id, LocalDateTime tempoVotacao) {
+        SessaoEntity entityAtualizada = buscarPorId(id);
+        entityAtualizada.setTempoVotacao(tempoVotacao);
         return repository.save(entityAtualizada);
     }
 
