@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class SessaoRequestDto {
 
     @NotNull(message = "Campo tempoVotacao é obrigatório")
-    @JsonFormat(pattern = "yyyy-MM-dd-HH-mm-ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime tempoVotacao;
 
     @NotNull(message = "Campo idPauta é obrigatório")

@@ -13,6 +13,6 @@ import javax.validation.constraints.Size;
 public class AssociadoRequestDto {
 
     @NotBlank(message = "CPF é obrigatório")
-    @Size(min = 11, max = 11, message = "CPF inválido")
+    @Size(min = 11, max = 11, message = "tamanho de CPF inválido")
     private String cpf;
 }

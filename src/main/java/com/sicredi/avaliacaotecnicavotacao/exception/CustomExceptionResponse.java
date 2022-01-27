@@ -12,7 +12,9 @@ import java.util.List;
 @Setter
 public class CustomExceptionResponse {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cause;
 
@@ -20,7 +22,7 @@ public class CustomExceptionResponse {
     private String parameter;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<String> errors;
+    private List<ErrorValidationsResponse> erros;
 
     public CustomExceptionResponse(String msg) {
         message = msg;
@@ -31,7 +33,8 @@ public class CustomExceptionResponse {
         parameter = param;
     }
 
-    public CustomExceptionResponse(List<String> errors) {
-        this.errors = errors;
+    public CustomExceptionResponse(List<ErrorValidationsResponse> errors) {
+        this.erros = errors;
     }
 }
+

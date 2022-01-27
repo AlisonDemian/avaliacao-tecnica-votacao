@@ -17,8 +17,8 @@ public class VotoRequestDto {
     @Min(value = 0, message = "O mínimo é 0")
     @Max(value = 1, message = "O máximo é 1")
     private Integer voto;
-    @NotNull(message = "Campo sessao é obrigatório")
+    @NotNull(message = "Campo idSessao é obrigatório")
     private Long idSessao;
-    @NotNull(message = "Campo associado é obrigatório")
+    @NotNull(message = "Campo idAssociado é obrigatório")
     private Long idAssociado;
 }
