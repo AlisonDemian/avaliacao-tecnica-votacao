@@ -37,6 +37,7 @@ public class VotacaoBusiness {
 
     private void verificaAssociado(VotoSessaoEntity votoEntity, Long idAssociado) {
         votoEntity.setAssociado(associadoService.buscarPorId(idAssociado));
+        associadoService.validaApiStatusCpf(votoEntity.getAssociado().getCpf());
     }
 
     private void verificaSessao(VotoSessaoEntity votoEntity, Long idSessao) {
