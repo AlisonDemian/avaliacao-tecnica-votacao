@@ -1,5 +1,6 @@
 package com.sicredi.avaliacaotecnicavotacao.converter;
 
+import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaResponse;
 import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.*;
@@ -40,18 +43,23 @@ class SessaoConverterTest {
 
     @Test
     void quandoConverter_entityToResponseDto_retornaSucesso() {
+        LocalDateTime tempo = LocalDateTime.now().plusYears(1);
+        SessaoEntity entity = geraSessaoEntity();
+        entity.setTempoVotacao(tempo);
+        SessaoResponseDto sessaoResponseDto = geraSessaoResponseDto();
+        sessaoResponseDto.setTempoVotacao(tempo);
+
         when(pautaConverter.entityToResponseDto(any(PautaEntity.class)))
                 .thenReturn(geraPautaResponse());
 
-        SessaoEntity entity = geraSessaoEntity();
         assertAll(
-                () -> assertEquals(geraSessaoResponseDto().getId(),
+                () -> assertEquals(sessaoResponseDto.getId(),
                         converter.entityToResponseDto(entity).getId()),
 
-                () -> assertEquals(geraSessaoResponseDto().getTempoVotacao(),
+                () -> assertEquals(sessaoResponseDto.getTempoVotacao(),
                         converter.entityToResponseDto(entity).getTempoVotacao()),
 
-                () -> assertEquals(geraSessaoResponseDto().getPauta().getId(),
+                () -> assertEquals(sessaoResponseDto.getPauta().getId(),
                         converter.entityToResponseDto(entity).getPauta().getId())
         );
     }
