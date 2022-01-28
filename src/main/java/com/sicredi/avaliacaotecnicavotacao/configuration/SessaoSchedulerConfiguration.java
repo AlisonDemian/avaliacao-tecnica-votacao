@@ -26,7 +26,7 @@ public class SessaoSchedulerConfiguration {
 
     @Scheduled(fixedDelay = 1000)
     public void verificaSessaoStatusTask() {
-        List<SessaoEntity> sessoes = sessaoService.listarSessaoStatusAberto();
+        List<SessaoEntity> sessoes = sessaoService.listar();
 
         sessoes.stream()
                 .filter(sessao -> sessao.getTempoVotacao().isEqual(LocalDateTime.now())
@@ -39,9 +39,9 @@ public class SessaoSchedulerConfiguration {
         Integer totalVotosNao = sessao.getPauta().getVotosNao();
         votoService.deletarVotacoes(sessao.getId());
 
-        if ( totalVotosSim > totalVotosNao ) {
+        if (totalVotosSim > totalVotosNao) {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), APROVADA.status);
-        } else if ( Objects.equals(totalVotosSim, totalVotosNao )) {
+        } else if (Objects.equals(totalVotosSim, totalVotosNao)) {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), EMPATE.status);
         } else {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), REPROVADA.status);

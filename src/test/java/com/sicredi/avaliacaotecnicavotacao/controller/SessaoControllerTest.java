@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -52,10 +51,11 @@ class SessaoControllerTest {
     @Test
     void quandoCriarSessao_retornarStatusCreated() throws Exception {
 
+        SessaoEntity sessaoEntity = geraSessaoEntity();
         when(converter.requestToEntity(any(SessaoRequestDto.class)))
-                .thenReturn(SessaoUtils.geraSessaoEntity());
+                .thenReturn(sessaoEntity);
         when(business.criar(any(SessaoEntity.class)))
-                .thenReturn(SessaoUtils.geraSessaoEntity());
+                .thenReturn(sessaoEntity);
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
                 .thenReturn(SessaoUtils.geraSessaoResponseDto());
 
@@ -69,7 +69,7 @@ class SessaoControllerTest {
 
     @Test
     void quandoListarSessoes_retornarStatusOk() throws Exception {
-        when(service.listar())
+        when(business.listar())
                 .thenReturn(geraListaSessaoEntity());
         when(converter.entityListToResponseDtoList(anyList()))
                 .thenReturn(geraListaSessaoResponseDto());
@@ -84,7 +84,7 @@ class SessaoControllerTest {
     @Test
     void quandoBuscarPorId_retornarStatusOk() throws Exception {
         Long id = anyLong();
-        when(service.buscarPorId(id))
+        when(business.buscarPorId(id))
                 .thenReturn(geraSessaoEntity());
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
                 .thenReturn(geraSessaoResponseDto());
@@ -107,7 +107,7 @@ class SessaoControllerTest {
         sessaoResponseDtoAtualizada.setTempoVotacao(tempo);
 
         Long id = anyLong();
-        when(service.atualizar(id, any(LocalDateTime.class)))
+        when(business.atualizar(id, any(LocalDateTime.class)))
                 .thenReturn(sessaoAtualizada);
         when(converter.entityToResponseDto(any(SessaoEntity.class)))
                 .thenReturn(sessaoResponseDtoAtualizada);

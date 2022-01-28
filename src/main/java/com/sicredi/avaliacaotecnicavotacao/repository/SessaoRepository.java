@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface SessaoRepository extends JpaRepository<SessaoEntity, Long> {
 
-    List<SessaoEntity> findByStatusAberto(Boolean status);
-
     @Query("SELECT COUNT(*) = 0" +
             " FROM SessaoEntity se" +
             " WHERE se.pauta.id = :idPauta")

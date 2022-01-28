@@ -10,6 +10,8 @@ import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -26,7 +28,22 @@ public class SessaoBusiness {
         sessaoService.verificaSePautaNaoTemSessao(idPauta);
         verificaSePautaEstaAberta(pautaEntity, sessaoEntity);
         return sessaoService.criar(sessaoEntity);
+    }
 
+    public List<SessaoEntity> listar() {
+        return sessaoService.listar();
+    }
+
+    public SessaoEntity buscarPorId(Long id) {
+        return sessaoService.buscarPorId(id);
+    }
+
+    public SessaoEntity atualizar(Long id, LocalDateTime tempoVotacao) {
+        return sessaoService.atualizar(id, tempoVotacao);
+    }
+
+    public void deletar(Long id) {
+        sessaoService.deletar(id);
     }
 
     private void verificaSePautaEstaAberta(PautaEntity pautaEntity, SessaoEntity sessaoEntity) {

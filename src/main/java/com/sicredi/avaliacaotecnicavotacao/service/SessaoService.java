@@ -29,11 +29,6 @@ public class SessaoService {
                 .orElseThrow(() -> new ElementNotFoundException("Sessao não encontrada"));
     }
 
-    public List<SessaoEntity> listarSessaoStatusAberto() {
-        return repository.findByStatusAberto(true);
-    }
-
-
     public void verificaSePautaNaoTemSessao(Long idPauta) {
         if (!repository.verificaSePautaNaoTemSessao(idPauta)) {
             throw new ElementAlreadyExistsException(String.format("pauta %d ja possui sessão", idPauta));

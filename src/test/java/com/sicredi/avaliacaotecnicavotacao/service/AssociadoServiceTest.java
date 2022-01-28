@@ -27,6 +27,9 @@ class AssociadoServiceTest {
     private AssociadoService service;
 
     @Mock
+    private CpfApiValidationService cpfApiValidationService;
+
+    @Mock
     private AssociadoRepository repository;
 
     @Test
@@ -37,6 +40,7 @@ class AssociadoServiceTest {
                 .thenReturn(entity);
 
         assertNotNull(service.criar(entity));
+        verify(cpfApiValidationService, times(1)).validaApiStatusCpf(entity.getCpf());
     }
 
     @Test
@@ -83,6 +87,7 @@ class AssociadoServiceTest {
         assertThat(service.atualizar(anyLong(), entityAtualizada))
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("cpf", "22222222222");
+        verify(cpfApiValidationService, times(1)).validaApiStatusCpf(entityAtualizada.getCpf());
     }
 
     @Test

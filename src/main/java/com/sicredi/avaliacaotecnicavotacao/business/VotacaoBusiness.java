@@ -3,10 +3,7 @@ package com.sicredi.avaliacaotecnicavotacao.business;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.VotoSessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.VotoSessaoEntityKey;
-import com.sicredi.avaliacaotecnicavotacao.service.AssociadoService;
-import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
-import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
-import com.sicredi.avaliacaotecnicavotacao.service.VotoService;
+import com.sicredi.avaliacaotecnicavotacao.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +15,7 @@ public class VotacaoBusiness {
     private final AssociadoService associadoService;
     private final PautaService pautaService;
     private final VotoService votoService;
+    private final CpfApiValidationService cpfApiValidationService;
 
     public VotoSessaoEntity votar(VotoSessaoEntity votoEntity) {
         Long idAssociado = votoEntity.getAssociado().getId();
@@ -37,7 +35,7 @@ public class VotacaoBusiness {
 
     private void verificaAssociado(VotoSessaoEntity votoEntity, Long idAssociado) {
         votoEntity.setAssociado(associadoService.buscarPorId(idAssociado));
-        associadoService.validaApiStatusCpf(votoEntity.getAssociado().getCpf());
+        cpfApiValidationService.validaApiStatusCpf(votoEntity.getAssociado().getCpf());
     }
 
     private void verificaSessao(VotoSessaoEntity votoEntity, Long idSessao) {

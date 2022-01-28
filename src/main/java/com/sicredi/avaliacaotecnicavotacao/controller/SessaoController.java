@@ -4,7 +4,6 @@ import com.sicredi.avaliacaotecnicavotacao.business.SessaoBusiness;
 import com.sicredi.avaliacaotecnicavotacao.converter.SessaoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
-import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import static java.time.format.DateTimeFormatter.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,7 +22,6 @@ import static java.time.format.DateTimeFormatter.*;
 public class SessaoController {
 
     private final SessaoBusiness business;
-    private final SessaoService service;
     private final SessaoConverter converter;
 
     @PostMapping("/criar")
@@ -40,29 +35,29 @@ public class SessaoController {
     public ResponseEntity<List<SessaoResponseDto>> listar() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(converter.entityListToResponseDtoList(service.listar()));
+                .body(converter.entityListToResponseDtoList(business.listar()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SessaoResponseDto> buscarPorId(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(converter.entityToResponseDto(service.buscarPorId(id)));
+                .body(converter.entityToResponseDto(business.buscarPorId(id)));
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<SessaoResponseDto> atualizar(@PathVariable Long id,
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-                                                      @RequestParam(name = "tempoVotacao")
-                                                              LocalDateTime tempoVotacao) {
+                                                       @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                                       @RequestParam(name = "tempoVotacao")
+                                                               LocalDateTime tempoVotacao) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(converter.entityToResponseDto(service.atualizar(id, tempoVotacao)));
+                .body(converter.entityToResponseDto(business.atualizar(id, tempoVotacao)));
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<SessaoResponseDto> deletar(@PathVariable Long id) {
-        service.deletar(id);
+        business.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }
