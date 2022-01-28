@@ -32,7 +32,7 @@ que deve ser especificado.
     - pauta deve estar com status "em aberto" para votos
     
 ### Associado  
-    - cpf é obrigatório
+    - cpf será verificado se é válido (ao criar, atualizar e votar)
     
 ### Voto 
     - sessão é obrigatório
@@ -49,7 +49,5 @@ que deve ser especificado.
   - OpenAPI/Swagger UI
   
 ## Recursos pendentes
-  - Integração com api de verificação de CPF
   - Mensageria 
-  - Colocar em um servidor web
-  - melhorar performance do endpoint Votar para cenários com maior número de requisições 
+  - Melhorar performance do endpoint Votar para cenários com maior número de requisições 
