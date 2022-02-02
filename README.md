@@ -63,5 +63,5 @@ que deve ser especificado.
   - OpenAPI/Swagger UI
   
 ## Recursos pendentes
-  - Mensageria 
-  - Melhorar performance do endpoint Votar para cenários com maior número de requisições 
+  - Introduzir Kafka no projeto
+  - Implementar paginação no endpoint de listagem de pautas
