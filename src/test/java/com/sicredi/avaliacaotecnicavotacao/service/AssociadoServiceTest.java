@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.AssociadoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.AssociadoRepository;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,30 @@ class AssociadoServiceTest {
         assertThatThrownBy(() -> service.buscarPorId(id))
                 .isInstanceOf(ElementNotFoundException.class)
                 .hasMessage(String.format("Associado com id %d não encontrado", id));
+    }
+
+    @Test
+    void quandoVerificaPorCpf_false_retornaSucesso() {
+        String cpf = anyString();
+        when(repository.buscarPorCpf(cpf))
+                .thenReturn(false);
+
+        service.verificaPorCpf(cpf);
+
+        verify(repository, times(1)).buscarPorCpf(cpf);
+    }
+
+    @Test
+    void quandoVerificaPorCpf_true_throwException() {
+        String cpf = anyString();
+        when(repository.buscarPorCpf(cpf))
+                .thenReturn(true);
+
+        assertThatThrownBy(() -> service.verificaPorCpf(cpf))
+                .isInstanceOf(ElementAlreadyExistsException.class)
+                .hasMessage(String.format("Associado com o CPF %s já registrado", cpf));
+
+        verify(repository, times(1)).buscarPorCpf(cpf);
     }
 
     @Test

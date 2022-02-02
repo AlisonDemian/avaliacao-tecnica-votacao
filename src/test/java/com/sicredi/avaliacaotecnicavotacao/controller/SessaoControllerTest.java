@@ -6,6 +6,7 @@ import com.sicredi.avaliacaotecnicavotacao.converter.SessaoConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.BusinessGenericException;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
 import com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -65,6 +68,26 @@ class SessaoControllerTest {
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void quandoCriarSessao_throwBusinessGenericException() throws Exception {
+        SessaoEntity sessaoEntity = geraSessaoEntity();
+        when(converter.requestToEntity(any(SessaoRequestDto.class)))
+                .thenReturn(sessaoEntity);
+        when(business.criar(any(SessaoEntity.class)))
+                .thenThrow(new BusinessGenericException(String.format("pauta %d ja foi votada", sessaoEntity.getPauta().getId())));
+
+        MockHttpServletRequestBuilder requestBuilder = post("/sessoes/criar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(geraSessaoRequestDto()));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(resultado -> assertEquals(BusinessGenericException.class, resultado.getResolvedException().getClass()))
+                .andExpect(resultado -> assertTrue(resultado.getResolvedException().getMessage().contains(String.format("pauta %d ja foi votada", sessaoEntity.getPauta().getId()))));
+
+
     }
 
     @Test

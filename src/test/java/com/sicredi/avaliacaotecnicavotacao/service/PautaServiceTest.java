@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,29 @@ class PautaServiceTest {
     }
 
     @Test
-    void quandoAtualizarPorId_retornaSucesso() {
+    void quandoBuscarPorTema_false_retornaSucesso() {
+        String tema = anyString();
+        when(repository.buscaPorTema(tema))
+                .thenReturn(false);
+
+        service.buscarPorTema(tema);
+
+        verify(repository, times(1)).buscaPorTema(tema);
+    }
+
+    @Test
+    void quandoBuscarPorTema_true_throwException() {
+        String tema = anyString();
+        when(repository.buscaPorTema(tema))
+                .thenReturn(true);
+
+        assertThatThrownBy(() -> service.buscarPorTema(tema))
+                .isInstanceOf(ElementAlreadyExistsException.class)
+                .hasMessage(String.format("Pauta com tema '%s' ja existe", tema));
+    }
+
+    @Test
+    void quandoAtualizar_retornaSucesso() {
         PautaEntity entity = geraPautaAbertaEntity();
         entity.setTema("teste atualizado");
 
@@ -87,6 +110,21 @@ class PautaServiceTest {
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("tema", "teste atualizado");
 
+    }
+
+
+    @Test
+    void quandoAtualizarPautaComSessaoEncerrada_retornaSucesso() {
+        Long id = anyLong();
+        PautaEntity pautaEntity = geraPautaAbertaEntity();
+        String status = pautaEntity.getStatusVotacao();
+
+        when(repository.findById(id))
+                .thenReturn(Optional.of(pautaEntity));
+
+        service.atualizaPautaComSessaoEncerrada(id, status);
+
+        verify(repository, times(1)).atualizaPautaComSessaoEncerrada(id, status);
     }
 
     @Test

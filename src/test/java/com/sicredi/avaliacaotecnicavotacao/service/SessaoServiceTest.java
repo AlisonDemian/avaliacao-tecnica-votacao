@@ -1,6 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
+import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.SessaoRepository;
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,30 @@ class SessaoServiceTest {
         assertThatThrownBy(() -> service.buscarPorId(anyLong()))
                 .isInstanceOf(ElementNotFoundException.class)
                 .hasMessage("Sessao não encontrada");
+    }
+
+    @Test
+    void quandoVerificaSePautaNaoTemSessao_true_retornaSucesso() {
+        Long idPauta = anyLong();
+
+        when(repository.verificaSePautaNaoTemSessao(idPauta))
+                .thenReturn(true);
+
+        service.verificaSePautaNaoTemSessao(idPauta);
+
+        verify(repository, times(1)).verificaSePautaNaoTemSessao(idPauta);
+    }
+
+    @Test
+    void quandoVerificaSePautaNaoTemSessao_false_throwException() {
+        Long id = anyLong();
+
+        when(repository.verificaSePautaNaoTemSessao(id))
+                .thenReturn(false);
+
+        assertThatThrownBy(() -> service.verificaSePautaNaoTemSessao(id))
+                .isInstanceOf(ElementAlreadyExistsException.class)
+                .hasMessage(String.format("pauta %d ja possui sessão", id));
     }
 
     @Test

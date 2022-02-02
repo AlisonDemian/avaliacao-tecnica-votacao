@@ -16,7 +16,7 @@ public class PautaService {
     private final PautaRepository repository;
 
     public PautaEntity criar(PautaEntity entity) {
-        buscarPautaPorTema(entity.getTema());
+        buscarPorTema(entity.getTema());
         return repository.save(entity);
     }
 
@@ -29,7 +29,7 @@ public class PautaService {
                 .orElseThrow(() -> new ElementNotFoundException("Pauta não encontrada"));
     }
 
-    public void buscarPautaPorTema(String tema) {
+    public void buscarPorTema(String tema) {
         if (repository.buscaPorTema(tema)) {
             throw new ElementAlreadyExistsException(String.format("Pauta com tema '%s' ja existe", tema));
         }

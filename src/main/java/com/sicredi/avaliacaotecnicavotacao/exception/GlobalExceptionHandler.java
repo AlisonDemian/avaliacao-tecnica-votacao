@@ -63,6 +63,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .status(status)
                 .body(new CustomExceptionResponse(errorsResponse));
     }
-
-
 }

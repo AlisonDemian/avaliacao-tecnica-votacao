@@ -1,0 +1,6 @@
+projectKey=avaliacao-tecnica-votacao
+serverUrl=http://localhost:9000
+serverVersion=9.3.0.51899
+dashboardUrl=http://localhost:9000/dashboard?id=avaliacao-tecnica-votacao
+ceTaskId=AX67--jJEYANktYeeKrz
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AX67--jJEYANktYeeKrz

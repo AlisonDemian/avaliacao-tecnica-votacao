@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,7 +45,7 @@ public class PautaController {
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<PautaResponseDto> atualizar(@PathVariable Long id,
-                                                           @Valid @RequestBody PautaRequestDto request) {
+                                                      @Valid @RequestBody PautaRequestDto request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(converter.entityToResponseDto(
