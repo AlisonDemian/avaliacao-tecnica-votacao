@@ -1,5 +1,7 @@
 package com.sicredi.avaliacaotecnicavotacao.configuration;
 
+import com.sicredi.avaliacaotecnicavotacao.converter.PautaConverter;
+import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
@@ -18,11 +20,13 @@ import static com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum.*;
 @RequiredArgsConstructor
 @Configuration
 @EnableScheduling
-public class SessaoSchedulerConfiguration {
+public class SessaoScheduler {
 
     private final SessaoService sessaoService;
     private final PautaService pautaService;
     private final VotoService votoService;
+    private final PautaConverter pautaConverter;
+    private final KafkaConfiguration kafkaConfiguration;
 
     @Scheduled(fixedDelay = 1000)
     public void verificaSessaoStatusTask() {
@@ -35,8 +39,9 @@ public class SessaoSchedulerConfiguration {
     }
 
     private void atualizaPautaVotada(SessaoEntity sessao) {
-        Integer totalVotosSim = sessao.getPauta().getVotosSim();
-        Integer totalVotosNao = sessao.getPauta().getVotosNao();
+        PautaEntity pauta = sessao.getPauta();
+        Integer totalVotosSim = pauta.getVotosSim();
+        Integer totalVotosNao = pauta.getVotosNao();
         votoService.deletarVotacoes(sessao.getId());
 
         if (totalVotosSim > totalVotosNao) {
@@ -46,10 +51,12 @@ public class SessaoSchedulerConfiguration {
         } else {
             pautaService.atualizaPautaComSessaoEncerrada(sessao.getPauta().getId(), REPROVADA.status);
         }
-        deletarSessao(sessao);
+        sessaoService.deletar(sessao.getId());
+        enviarMensagemKafka(pauta);
     }
 
-    private void deletarSessao(SessaoEntity sessao) {
-        sessaoService.deletar(sessao.getId());
+    private void enviarMensagemKafka(PautaEntity pauta) {
+        PautaEntity pautaComStatusAtualizado = pautaService.buscarPorId(pauta.getId());
+        kafkaConfiguration.enviaMensagem(pautaConverter.entityToVotacaoMsgResponseDto(pautaComStatusAtualizado));
     }
 }

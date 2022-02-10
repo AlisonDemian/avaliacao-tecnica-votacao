@@ -2,6 +2,7 @@ package com.sicredi.avaliacaotecnicavotacao.converter;
 
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaResponseDto;
+import com.sicredi.avaliacaotecnicavotacao.dto.PautaVotadaMsgResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,15 @@ public class PautaConverter {
         return entities.stream()
                 .map(this::entityToResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    public PautaVotadaMsgResponseDto entityToVotacaoMsgResponseDto(PautaEntity entity) {
+        return PautaVotadaMsgResponseDto.builder()
+                .id(entity.getId())
+                .statusVotacao(entity.getStatusVotacao())
+                .tema(entity.getTema())
+                .votosNao(entity.getVotosNao())
+                .votosSim(entity.getVotosSim())
+                .build();
     }
 }
