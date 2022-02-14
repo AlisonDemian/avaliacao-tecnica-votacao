@@ -3,6 +3,7 @@ package com.sicredi.avaliacaotecnicavotacao.configuration;
 import com.sicredi.avaliacaotecnicavotacao.converter.PautaConverter;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
+import com.sicredi.avaliacaotecnicavotacao.service.KafkaProducerService;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
 import com.sicredi.avaliacaotecnicavotacao.service.SessaoService;
 import com.sicredi.avaliacaotecnicavotacao.service.VotoService;
@@ -26,7 +27,7 @@ public class SessaoScheduler {
     private final PautaService pautaService;
     private final VotoService votoService;
     private final PautaConverter pautaConverter;
-    private final KafkaConfiguration kafkaConfiguration;
+    private final KafkaProducerService kafkaProducerService;
 
     @Scheduled(fixedDelay = 1000)
     public void verificaSessaoStatusTask() {
@@ -57,6 +58,6 @@ public class SessaoScheduler {
 
     private void enviarMensagemKafka(PautaEntity pauta) {
         PautaEntity pautaComStatusAtualizado = pautaService.buscarPorId(pauta.getId());
-        kafkaConfiguration.enviaMensagem(pautaConverter.entityToVotacaoMsgResponseDto(pautaComStatusAtualizado));
+        kafkaProducerService.enviarMensagem(pautaConverter.entityToVotacaoMsgResponseDto(pautaComStatusAtualizado));
     }
 }
