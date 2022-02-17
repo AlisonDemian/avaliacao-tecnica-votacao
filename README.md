@@ -25,6 +25,8 @@ que deve ser especificado.
   "ddl-auto: create-drop"
   ~~~
 ## Especificações de gerenciamento
+### Link Swagger UI 
+   - http://localhost:8080/swagger-ui/index.html
 ### Pauta
    - tema é obrigatório
    - temas de pautas são unicos
