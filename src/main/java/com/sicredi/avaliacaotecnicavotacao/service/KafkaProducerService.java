@@ -1,11 +1,11 @@
 package com.sicredi.avaliacaotecnicavotacao.service;
 
-import com.sicredi.avaliacaotecnicavotacao.dto.PautaVotadaMsgResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -14,13 +14,10 @@ public class KafkaProducerService {
 
     private static final String TOPIC = "PAUTA_VOTADA";
     private static final String KEY = "VOTACAO";
-    private final KafkaProducer<String, PautaVotadaMsgResponseDto> producer;
+    private final KafkaTemplate<String, Object> producer;
 
-    public void enviarMensagem(PautaVotadaMsgResponseDto msgResponseDto) {
-        ProducerRecord<String, PautaVotadaMsgResponseDto> mensagem = new ProducerRecord<>(TOPIC, KEY, msgResponseDto);
-        producer.send(mensagem);
-        log.info("MENSAGEM ENVIADA COM SUCESSO" + "\nTOPICO: " + mensagem.topic() + "\nKEY: " + mensagem.key() + "\nMENSAGEM: " + mensagem.value().toString());
+    public void enviarMensagem(Object msgValue) {
+        producer.send(TOPIC, KEY, msgValue);
+        log.debug("MENSAGEM SENDO ENVIADA: ", msgValue.toString());
     }
-
-
 }

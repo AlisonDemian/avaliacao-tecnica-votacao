@@ -1,4 +1,4 @@
-package com.sicredi.avaliacaotecnicavotacao.configuration;
+package com.sicredi.avaliacaotecnicavotacao.configuration.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -10,7 +10,7 @@ public class KafkaValueToJsonSerializer<T> implements Serializer<T> {
 
     @SneakyThrows
     @Override
-    public byte[] serialize(String s, Object dto) {
-        return objectMapper.writeValueAsBytes(dto);
+    public byte[] serialize(String s, Object obj) {
+        return objectMapper.writeValueAsBytes(obj);
     }
 }
