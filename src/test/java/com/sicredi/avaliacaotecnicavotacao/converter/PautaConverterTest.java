@@ -25,10 +25,10 @@ class PautaConverterTest {
     }
 
     @Test
-    void quandoConverter_entityListToResponseDtoList_retornaSucesso() {
+    void quandoConverter_entityPageToResponseDtoPage_retornaSucesso() {
         assertEquals(
-                geraListaPautaResponse().get(0).getTema(),
-                converter.entityListToResponseDtoList(geraListaPautaEntity()).get(0).getTema()
+                geraPagePautaResponse().getContent().get(0).getTema(),
+                converter.entityPageToResponseDtoPage(geraPagePautaEntity()).getContent().get(0).getTema()
         );
     }
 }

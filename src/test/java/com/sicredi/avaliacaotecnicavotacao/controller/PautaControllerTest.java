@@ -5,6 +5,7 @@ import com.sicredi.avaliacaotecnicavotacao.converter.PautaConverter;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
+import com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -54,12 +55,14 @@ class PautaControllerTest {
 
     @Test
     void quando_listarPautas_retornaStatusOk() throws Exception {
-        when(service.listar())
-                .thenReturn(geraListaPautaEntity());
-        when(converter.entityListToResponseDtoList(anyList()))
-                .thenReturn(geraListaPautaResponse());
+        when(service.listar(anyInt(), anyInt()))
+                .thenReturn(geraPagePautaEntity());
+        when(converter.entityPageToResponseDtoPage(any()))
+                .thenReturn(PautaUtils.geraPagePautaResponse());
 
         MockHttpServletRequestBuilder requestBuilder = get("/pautas/")
+                .param("page", Integer.valueOf(0).toString())
+                .param("size", Integer.valueOf(1).toString())
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)

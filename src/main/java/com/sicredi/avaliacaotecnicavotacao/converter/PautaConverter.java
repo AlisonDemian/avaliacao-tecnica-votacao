@@ -5,6 +5,8 @@ import com.sicredi.avaliacaotecnicavotacao.dto.PautaResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaVotadaMsgResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,10 +32,12 @@ public class PautaConverter {
                 .build();
     }
 
-    public List<PautaResponseDto> entityListToResponseDtoList(List<PautaEntity> entities) {
-        return entities.stream()
+    public Page<PautaResponseDto> entityPageToResponseDtoPage(Page<PautaEntity> entities) {
+        List<PautaResponseDto> list = entities.stream()
                 .map(this::entityToResponseDto)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(list);
     }
 
     public PautaVotadaMsgResponseDto entityToVotacaoMsgResponseDto(PautaEntity entity) {

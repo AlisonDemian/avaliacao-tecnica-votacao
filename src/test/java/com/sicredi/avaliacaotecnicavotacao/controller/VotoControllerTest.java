@@ -17,7 +17,6 @@ import static com.sicredi.avaliacaotecnicavotacao.utils.VotoUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -26,7 +25,7 @@ class VotoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
     @MockBean
     private VotacaoBusiness votacaoBusiness;
 

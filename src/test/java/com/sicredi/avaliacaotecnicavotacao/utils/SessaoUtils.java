@@ -5,7 +5,6 @@ import com.sicredi.avaliacaotecnicavotacao.dto.SessaoResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.SessaoEntity;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaAbertaEntity;

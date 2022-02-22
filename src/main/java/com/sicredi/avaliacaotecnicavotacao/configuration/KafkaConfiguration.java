@@ -16,12 +16,12 @@ import java.util.Map;
 public class KafkaConfiguration {
 
     @Bean
-    public KafkaTemplate getKafkaTemplate() {
+    public KafkaTemplate<String, Object> getKafkaTemplate() {
         return new KafkaTemplate(getProperties());
     }
 
     @Bean
-    public ProducerFactory getProperties() {
+    public ProducerFactory<String, String> getProperties() {
         Map<String, String> properties = new HashMap<>();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9093");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());

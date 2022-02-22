@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static com.sicredi.avaliacaotecnicavotacao.enums.KafkaTopicsEnum.PAUTA_VOTADA;
 import static com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum.*;
 
 @RequiredArgsConstructor
@@ -58,6 +59,7 @@ public class SessaoScheduler {
 
     private void enviarMensagemKafka(PautaEntity pauta) {
         PautaEntity pautaComStatusAtualizado = pautaService.buscarPorId(pauta.getId());
-        kafkaProducerService.enviarMensagem(pautaConverter.entityToVotacaoMsgResponseDto(pautaComStatusAtualizado));
+        kafkaProducerService.enviarMensagem(PAUTA_VOTADA.getTopico(),
+                pautaConverter.entityToVotacaoMsgResponseDto(pautaComStatusAtualizado));
     }
 }

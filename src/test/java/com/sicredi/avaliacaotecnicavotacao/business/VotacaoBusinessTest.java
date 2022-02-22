@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.geraAssociadoEntity;
 import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaAbertaEntity;
-import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.*;
+import static com.sicredi.avaliacaotecnicavotacao.utils.SessaoUtils.geraSessaoEntity;
 import static com.sicredi.avaliacaotecnicavotacao.utils.VotoUtils.geraVotoEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,7 +41,7 @@ class VotacaoBusinessTest {
 
     @Test
     void quandoVotar_persisteVotoAtualizadoComSucesso() {
-        VotoSessaoEntity votoEntity= geraVotoEntity();
+        VotoSessaoEntity votoEntity = geraVotoEntity();
 
         votoService.verificaVotoMultiplo(votoEntity);
 

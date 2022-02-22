@@ -17,6 +17,6 @@ public class PautaVotadaMsgResponseDto {
 
     @Override
     public String toString() {
-        return "id: " + id+ "\ntema: " + tema + "\nstatus: " + statusVotacao + "\nvotos sim: " + votosSim + "\nvotos nao: " + votosNao;
+        return "id: " + id + "\ntema: " + tema + "\nstatus: " + statusVotacao + "\nvotos sim: " + votosSim + "\nvotos nao: " + votosNao;
     }
 }

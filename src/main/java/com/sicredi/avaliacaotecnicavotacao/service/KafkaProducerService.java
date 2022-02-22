@@ -2,22 +2,21 @@ package com.sicredi.avaliacaotecnicavotacao.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFuture;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class KafkaProducerService {
 
-    private static final String TOPIC = "PAUTA_VOTADA";
-    private static final String KEY = "VOTACAO";
     private final KafkaTemplate<String, Object> producer;
 
-    public void enviarMensagem(Object msgValue) {
-        producer.send(TOPIC, KEY, msgValue);
-        log.debug("MENSAGEM SENDO ENVIADA: ", msgValue.toString());
+    public void enviarMensagem(String topico, Object msgValue) {
+        String key = topico + RandomUtils.nextLong(1, 1000000);
+
+        log.info("MENSAGEM SENDO ENVIADA: " + msgValue.toString());
+        producer.send(topico, key, msgValue);
     }
 }

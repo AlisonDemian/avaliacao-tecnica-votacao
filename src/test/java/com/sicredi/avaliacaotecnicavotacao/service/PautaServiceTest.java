@@ -4,15 +4,17 @@ import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsException;
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
+import com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraListaPautaEntity;
 import static com.sicredi.avaliacaotecnicavotacao.utils.PautaUtils.geraPautaAbertaEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -42,10 +44,13 @@ class PautaServiceTest {
 
     @Test
     void quandoListarPauta_retornaSucesso() {
-        when(repository.findAll())
-                .thenReturn(geraListaPautaEntity());
+        int page = 0;
+        int size = 1;
+        Pageable pageable = PageRequest.of(page, size);
+        when(repository.findAll(pageable))
+                .thenReturn(PautaUtils.geraPagePautaEntity());
 
-        assertThat(service.listar())
+        assertThat(service.listar(page, size))
                 .isNotNull()
                 .hasOnlyElementsOfType(PautaEntity.class)
                 .hasSize(1);
