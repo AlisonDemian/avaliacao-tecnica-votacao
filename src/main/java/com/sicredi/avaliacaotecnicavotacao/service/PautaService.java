@@ -5,9 +5,10 @@ import com.sicredi.avaliacaotecnicavotacao.exception.ElementAlreadyExistsExcepti
 import com.sicredi.avaliacaotecnicavotacao.exception.ElementNotFoundException;
 import com.sicredi.avaliacaotecnicavotacao.repository.PautaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -20,8 +21,9 @@ public class PautaService {
         return repository.save(entity);
     }
 
-    public List<PautaEntity> listar() {
-        return repository.findAll();
+    public Page<PautaEntity> listar(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAll(pageable);
     }
 
     public PautaEntity buscarPorId(Long id) {

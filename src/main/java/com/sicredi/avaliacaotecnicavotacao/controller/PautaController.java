@@ -6,12 +6,12 @@ import com.sicredi.avaliacaotecnicavotacao.dto.PautaResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.service.PautaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,10 +30,10 @@ public class PautaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PautaResponseDto>> listar() {
+    public ResponseEntity<Page<PautaResponseDto>> listar(@RequestParam Integer page, @RequestParam Integer size) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(converter.entityListToResponseDtoList(service.listar()));
+                .body(converter.entityPageToResponseDtoPage(service.listar(page, size)));
     }
 
     @GetMapping("/{id}")

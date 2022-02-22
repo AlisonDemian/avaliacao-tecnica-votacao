@@ -19,7 +19,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.client.HttpClientErrorException;
 
 import static com.sicredi.avaliacaotecnicavotacao.utils.AssociadoUtils.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
@@ -99,7 +98,7 @@ class AssociadoControllerTest {
     }
 
     @Test
-    void quandoCriarAssociado_throwHttpClientErrorException() throws Exception{
+    void quandoCriarAssociado_throwHttpClientErrorException() throws Exception {
         when(converter.requestDtoToEntity(any(AssociadoRequestDto.class)))
                 .thenReturn(geraAssociadoEntity());
         when(service.criar(any(AssociadoEntity.class)))

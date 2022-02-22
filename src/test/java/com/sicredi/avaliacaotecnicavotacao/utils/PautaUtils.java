@@ -3,8 +3,8 @@ package com.sicredi.avaliacaotecnicavotacao.utils;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaRequestDto;
 import com.sicredi.avaliacaotecnicavotacao.dto.PautaResponseDto;
 import com.sicredi.avaliacaotecnicavotacao.entity.PautaEntity;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import static com.sicredi.avaliacaotecnicavotacao.enums.PautaStatusEnum.EM_ABERTO;
 import static java.util.Collections.singletonList;
@@ -35,11 +35,11 @@ public abstract class PautaUtils {
                 .build();
     }
 
-    public static List<PautaEntity> geraListaPautaEntity() {
-        return singletonList(geraPautaAbertaEntity());
+    public static Page<PautaEntity> geraPagePautaEntity() {
+        return new PageImpl<>(singletonList(geraPautaAbertaEntity()));
     }
 
-    public static List<PautaResponseDto> geraListaPautaResponse() {
-        return singletonList(geraPautaResponse());
+    public static Page<PautaResponseDto> geraPagePautaResponse() {
+        return new PageImpl<>(singletonList(geraPautaResponse()));
     }
 }
