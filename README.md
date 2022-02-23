@@ -10,7 +10,6 @@ API para gerenciamento de votações de pautas das assembleias do banco Sicredi
       * [Associado](#associado)
       * [Voto](#voto)
    * [Tecnologias](#tecnologias)
-   * [Recursos pendentes](#recursos-pendentes)
 <!--te-->
 ## Sobre
 - O sistema consiste em gerenciar sessões para votação de pautas internas no Sicredi, podendo gerar uma sessão com um tempo limite 
@@ -63,7 +62,6 @@ que deve ser especificado.
   - Spring Boot
   - H2 Database
   - OpenAPI/Swagger UI
-  
-## Recursos pendentes
-  - Introduzir Kafka no projeto
-  - Implementar paginação no endpoint de listagem de pautas
+  - Docker 
+  - Apache Kafka
+ 
